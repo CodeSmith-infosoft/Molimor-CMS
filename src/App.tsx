@@ -1,15 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import '@/assets/sass/index.scss'
+import 'bootstrap/dist/css/bootstrap.css'
 import { Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/dashboard'
+import Layouts from './pages/layouts'
+import ProductsPage from './pages/products'
 
 function App() {
   return (
     <>
-      home
-      <Routes>
-        <Route path='/dashboard' element={<Dashboard />} />
-      </Routes>
+      <Layouts>
+        <Routes>
+          <Route path='/' element={<Dashboard />} />
+          <Route path='/product' element={<ProductsPage />} />
+        </Routes>
+      </Layouts>
     </>
   )
 }

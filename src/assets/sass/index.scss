@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #FFF7F5 !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1504px !important;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+section {
+  margin-top: 32px;
+}
+
+@mixin h1 {
+  font-family: 'Lato';
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+@mixin p {
+  font-family: 'Lato';
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap');
+
+
+@import url(./layouts/layouts.scss);
+@import url(./dashboard/dashboard.scss);
