@@ -185,9 +185,6 @@
 
     }
 
-    // .children {
-    //     padding-top: 32px;
-    // }
 }
 
 .page-title {
@@ -196,6 +193,10 @@
     justify-content: space-between;
 
     .title {
+        h2 {
+            padding-bottom: 8px;
+        }
+
         .sub-title {
             display: flex;
             align-items: center;
@@ -226,6 +227,18 @@
             margin-right: 16px;
         }
 
+        .btn-1-cancel {
+            border: 1px solid #E31E24;
+            color: #E31E24;
+            margin-right: 24px;
+            padding: 11px 33px;
+            background-color: transparent
+        }
+
+        .btn-1-save {
+            padding: 11px 33px;
+        }
+
         button {
             @include font(14px, 700);
             background-color: #E31E24;
@@ -233,6 +246,7 @@
             padding: 10px 14px;
             border: 0;
             color: #FFFFFF;
+
             svg {
                 margin-right: 4px;
             }

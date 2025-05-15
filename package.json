@@ -13,6 +13,7 @@
     "@iconify/react": "^6.0.0",
     "apexcharts": "^4.7.0",
     "bootstrap": "^5.3.6",
+    "choices.js": "^11.1.0",
     "react": "^19.0.0",
     "react-apexcharts": "^1.7.0",
     "react-bootstrap": "^2.10.10",
@@ -20,7 +21,8 @@
     "react-flatpickr": "^4.0.10",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.0",
-    "sass": "^1.88.0"
+    "rsuite": "^5.80.2",
+    "sass": "1.77.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

@@ -1,26 +1,47 @@
 import React from 'react'
 import { BsDownload } from 'react-icons/bs'
 import { FaCaretRight, FaPlus } from 'react-icons/fa'
+import { Link } from 'react-router-dom';
 
 type PageTitleType = {
     title: string;
     subTitle?: string;
+    cancelBtn?: boolean;
+    openCategories?: () => void;
+    button?: string;
 }
 
-const PageTitle = ({ title, subTitle }: PageTitleType) => {
+const PageTitle = ({ title, subTitle, cancelBtn, button, openCategories }: PageTitleType) => {
     return (
         <section className='page-title'>
             <div className='title'>
                 <h2>{title}</h2>
                 <div className='sub-title'>
-                    <span className='sub-title-1'>Dashboard</span>
+                   <Link to="/"> <span className='sub-title-1'>Dashboard</span></Link>
+                    {
+                        subTitle &&
+                        <>
+                            <FaCaretRight />
+                            <span className='sub-title-1'>{subTitle}</span>
+                        </>
+                    }
                     <FaCaretRight />
                     <span>{title}</span>
                 </div>
             </div>
             <div className='title-btn'>
-                <button className='btn-1'><BsDownload /> Export</button>
-                <button><FaPlus /> Add products</button>
+                {
+                    cancelBtn ?
+                        <>
+                            <Link to=""> <button className='btn-1-cancel'>Cancel</button></Link>
+                            <Link to="/single-product"><button className='btn-1-save'>Save</button></Link>
+                        </>
+                        :
+                        <>
+                            <Link to=""> <button className='btn-1'><BsDownload /> Export </button></Link>
+                            <button onClick={openCategories}><FaPlus />  Add {button} </button>
+                        </>
+                }
             </div>
         </section>
     )

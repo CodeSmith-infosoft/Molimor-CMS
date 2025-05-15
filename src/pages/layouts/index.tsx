@@ -32,7 +32,7 @@ const Layouts = ({ children }: LayoutProps) => {
                             <ul>
                                 <li className={pathname === '/' ? 'active' : ''}><Link  to="/"><MdDashboard size={32} /> Dashboard</Link> </li>
                                 <li className={pathname === '/product' ? 'active' : ''}><Link to="/product"><BsBoxes size={32} /> Products</Link> </li>
-                                <li><Link to=""><Icon icon='line-md:list-3-filled' width={32} /> Categories</Link> </li>
+                                <li className={pathname === '/categories' ? 'active' : ''}><Link to="/Categories"><Icon icon='line-md:list-3-filled' width={32} /> Categories</Link> </li>
                                 <li><Link to=""><CgProfile size={32} /> Orders</Link> </li>
                                 <li><Link to=""><CgProfile size={32} /> Customers</Link> </li>
                                 <li><Link to=""><LuFileQuestion size={32} /> Inquiry</Link> </li>

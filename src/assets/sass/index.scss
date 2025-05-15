@@ -27,12 +27,21 @@ section {
 
 
 h2 {
-  font-family: 'Lato';
+  font-family: 'Lato' !important;
   font-weight: 700 !important;
   font-size: 28px !important;
   line-height: 100% !important;
   letter-spacing: 0% !important;
 
+}
+
+h3 {
+  font-family: 'Lato' !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  line-height: 100% !important;
+  letter-spacing: 0% !important;
+  text-transform: capitalize !important;
 }
 
 p {
@@ -46,3 +55,5 @@ p {
 
 @import url(./layouts/layouts.scss);
 @import url(./dashboard/dashboard.scss);
+@import url(./categories/categories.scss);
+@import url(./single-product/SingleProduct.scss);
