@@ -1,3 +1,5 @@
+@import '../mixin';
+
 .layout {
     display: flex;
 
@@ -59,6 +61,7 @@
                                 color: #E31E24;
                             }
                         }
+
                         &:active {
                             border-left: 5px solid #E31E24; // per your request
                             color: #E31E24;
@@ -196,6 +199,20 @@
         .sub-title {
             display: flex;
             align-items: center;
+
+            span {
+                @include font(14px, 500);
+                color: #777980;
+            }
+
+            svg {
+                color: #777980;
+                margin: 0 8px 0;
+            }
+
+            .sub-title-1 {
+                color: #E31E24;
+            }
         }
     }
 
@@ -210,11 +227,15 @@
         }
 
         button {
+            @include font(14px, 700);
             background-color: #E31E24;
             border-radius: 8px;
             padding: 10px 14px;
             border: 0;
             color: #FFFFFF;
+            svg {
+                margin-right: 4px;
+            }
         }
     }
 }

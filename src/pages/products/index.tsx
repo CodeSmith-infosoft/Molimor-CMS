@@ -9,7 +9,7 @@ const ProductsPage = () => {
                 <div className='title'>
                     <h2>Products</h2>
                     <div className='sub-title'>
-                        <span>Dashboard</span>
+                        <span className='sub-title-1'>Dashboard</span>
                         <FaCaretRight />
                         <span>Products</span>
                     </div>

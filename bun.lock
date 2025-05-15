@@ -5,6 +5,7 @@
       "name": "molimor-cms",
       "dependencies": {
         "@iconify/react": "^6.0.0",
+        "apexcharts": "^4.7.0",
         "bootstrap": "^5.3.6",
         "react": "^19.0.0",
         "react-apexcharts": "^1.7.0",
