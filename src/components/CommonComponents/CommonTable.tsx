@@ -8,7 +8,8 @@ type ComponentProps = {
         title: string | JSX.Element;
         dataIndex: string;
         key: string;
-        render?: (text: any, record: any) => ReactNode
+        render?: (text: any, record: any) => ReactNode;
+        headerClass?: string; 
     }[];
     isPagination?: boolean;
     page?: string;
@@ -16,13 +17,13 @@ type ComponentProps = {
     loading?: boolean;
 }
 
-const CommonTable: React.FC<ComponentProps> = ({ data, header, isPagination, page, totalDocs, loading }) => {
+const CommonTable: React.FC<ComponentProps> = ({ data, header, isPagination, totalDocs, loading }) => {
     return (
         <div className='common-table'>
             <Table className='mb-0'>
-                <thead>
+                <thead >
                     <tr>
-                        {header.length ? header.map((data) => <th>{data.title}</th>) : <th>No Header</th>}
+                        {header.length ? header.map((data) => <th className={data.headerClass}>{data.title}</th>) : <th>No Header</th>}
                     </tr>
                 </thead>
                 <tbody>

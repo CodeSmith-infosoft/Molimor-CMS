@@ -32,6 +32,15 @@
         .meun-items {
             padding-top: 40px;
 
+            .menu-items {
+                span {
+                    width: 20px;
+                    height: 20px;
+                    padding-left: 40px;
+                    color: #777980;
+                }
+            }
+
             ul {
                 list-style: none;
                 padding: 0;
@@ -40,6 +49,7 @@
                     // margin-left: 30px;
 
                     a {
+                        @include font(18px, 500);
                         display: flex;
                         align-items: center;
                         color: #777980;
@@ -89,6 +99,53 @@
                     }
                 }
             }
+
+            .drop-items {
+                border-radius: 6px;
+                flex-direction: column;
+                gap: 8px;
+
+                svg {
+                    margin-right: 8px;
+                    vertical-align: middle;
+                }
+
+                label {
+                    display: flex;
+                    align-items: center;
+                    padding: 16px 60px;
+                    @include font(18px, 500);
+                    color: #777980;
+
+                    input[type='checkbox'] {
+                        width: 14px !important;
+                        height: 14px !important;
+                        margin-right: 10px;
+                        border: 1px solid #777980;
+                    }
+                }
+
+
+                .add-category {
+                    @include font(18px, 500);
+                    color: #777980;
+                    display: flex;
+                    align-items: center;
+                    padding: 16px 60px;
+                    cursor: pointer;
+
+                    svg {
+                        margin-right: 10px;
+                    }
+
+                    // &:hover {
+                    //     text-decoration: underline;
+                    // }
+                }
+
+
+            }
+
         }
     }
 
@@ -184,6 +241,8 @@
         }
 
     }
+
+
 
 }
 

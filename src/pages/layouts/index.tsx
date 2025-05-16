@@ -1,10 +1,10 @@
 import logo from '@/assets/image/logo.png'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { ReactNode } from 'react'
-import { Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'react-bootstrap'
+import { ReactNode, useState } from 'react'
+import { Collapse, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'react-bootstrap'
 import { BsBoxes, BsFillBox2HeartFill } from 'react-icons/bs'
 import { CgProfile } from 'react-icons/cg'
-import { FaChevronDown, FaMedal, FaSearch } from 'react-icons/fa'
+import { FaAngleDown, FaAngleUp, FaChevronDown, FaMedal, FaPlus, FaSearch } from 'react-icons/fa'
 import { IoMdNotificationsOutline } from 'react-icons/io'
 import { IoLogOutSharp } from 'react-icons/io5'
 import { LuFileQuestion } from 'react-icons/lu'
@@ -19,6 +19,12 @@ type LayoutProps = {
 const Layouts = ({ children }: LayoutProps) => {
     const location = useLocation();
     const { pathname } = location;
+    const [open, setOpen] = useState(false);
+
+    const handleCategories = () => {
+        setOpen(!open);
+    };
+
 
     return (
         <>
@@ -30,10 +36,29 @@ const Layouts = ({ children }: LayoutProps) => {
                         </div>
                         <div className="meun-items">
                             <ul>
-                                <li className={pathname === '/' ? 'active' : ''}><Link  to="/"><MdDashboard size={32} /> Dashboard</Link> </li>
-                                <li className={pathname === '/product' ? 'active' : ''}><Link to="/product"><BsBoxes size={32} /> Products</Link> </li>
-                                <li className={pathname === '/categories' ? 'active' : ''}><Link to="/Categories"><Icon icon='line-md:list-3-filled' width={32} /> Categories</Link> </li>
-                                <li><Link to=""><CgProfile size={32} /> Orders</Link> </li>
+                                <li className={pathname === '/' ? 'active' : ''}><Link to="/"><MdDashboard size={32} /> Dashboard</Link> </li>
+                                <li className={pathname === '/product' ? 'active' : ''}>
+                                    <div className='d-flex align-items-center menu-items'>
+                                        <Link to="/product"><BsBoxes size={32} />  Products</Link> <span>{open ? <FaAngleUp size={18} /> : <FaAngleDown size={18} />} </span>
+                                    </div>
+                                </li>
+                                <li className={pathname === '/categories' ? 'active' : ''}>
+                                    <div className='d-flex align-items-center menu-items'>
+                                        <Link to="/Categories" onClick={handleCategories}><Icon icon='line-md:list-3-filled' width={32} /> Categories</Link> <span>{open ? <FaAngleUp size={18} /> : <FaAngleDown size={18} />} </span>
+                                    </div>
+                                    <Collapse in={open}>
+                                        <div className='drop-items'>
+                                            <div className='add-category'>
+                                                <FaPlus /> Add Categories
+                                            </div>
+                                            <label><input type="checkbox" /> Peanut Butter</label>
+                                            <label><input type="checkbox" /> Almond Butter</label>
+                                            <label><input type="checkbox" /> Cashew Butter</label>
+                                            <label><input type="checkbox" /> Hazelnut Butter</label>
+                                        </div>
+                                    </Collapse>
+                                </li>
+                                <li><Link to="/orders"><CgProfile size={32} /> Orders</Link> </li>
                                 <li><Link to=""><CgProfile size={32} /> Customers</Link> </li>
                                 <li><Link to=""><LuFileQuestion size={32} /> Inquiry</Link> </li>
                                 <li><Link to=""><PiCourtBasketballFill size={32} /> Coupons</Link> </li>

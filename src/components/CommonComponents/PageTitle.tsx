@@ -9,15 +9,16 @@ type PageTitleType = {
     cancelBtn?: boolean;
     openCategories?: () => void;
     button?: string;
+    path?: string
 }
 
-const PageTitle = ({ title, subTitle, cancelBtn, button, openCategories }: PageTitleType) => {
+const PageTitle = ({ path, title, subTitle, cancelBtn, button, openCategories }: PageTitleType) => {
     return (
         <section className='page-title'>
             <div className='title'>
                 <h2>{title}</h2>
                 <div className='sub-title'>
-                   <Link to="/"> <span className='sub-title-1'>Dashboard</span></Link>
+                    <Link to="/"> <span className='sub-title-1'>Dashboard</span></Link>
                     {
                         subTitle &&
                         <>
@@ -39,7 +40,11 @@ const PageTitle = ({ title, subTitle, cancelBtn, button, openCategories }: PageT
                         :
                         <>
                             <Link to=""> <button className='btn-1'><BsDownload /> Export </button></Link>
-                            <button onClick={openCategories}><FaPlus />  Add {button} </button>
+                            {path ?
+                                <Link rel="stylesheet" to={path}> <button><FaPlus />  Add {button} </button> </Link>
+                                :
+                                <button onClick={openCategories}><FaPlus />  Add {button} </button>
+                            }
                         </>
                 }
             </div>
