@@ -1,18 +1,5 @@
-import avatar from '@/assets/image/avatar-img.png'
-import { Table } from 'react-bootstrap'
 import { HiDotsVertical } from 'react-icons/hi'
-import { render } from 'sass';
 import CommonTable from '../CommonComponents/CommonTable';
-
-interface DataType {
-    orderId: string;
-    product: string;
-    customer: string;
-    date: string;
-    total: number;
-    payment: string;
-    status: string;
-}
 
 const RecentOrders = () => {
     const columns = [
@@ -25,15 +12,15 @@ const RecentOrders = () => {
             title: 'Product',
             dataIndex: 'product',
             key: 'product',
-            render: (value: any) => (
-                <div className='product'>
-                    <img src={value.image} alt="avatar" />
-                    <div className='product-title'>
-                        <h5>{value.title}</h5>
-                        <p className='mb-0'>{value.additional}</p>
-                    </div>
-                </div>
-            )
+            // render: (value: any) => (
+            //     <div className='product'>
+            //         <img src={value.image} alt="avatar" />
+            //         <div className='product-title'>
+            //             <h5>{value.title}</h5>
+            //             <p className='mb-0'>{value.additional}</p>
+            //         </div>
+            //     </div>
+            // )
         },
         {
             title: 'Customer',
@@ -49,22 +36,22 @@ const RecentOrders = () => {
             title: 'Total',
             dataIndex: 'total',
             key: 'total',
-            render: (value: any) => `$${value.toFixed(2)}`,
+            // render: (value: any) => `$${value.toFixed(2)}`,
         },
         {
             title: 'Payment',
             dataIndex: 'payment',
             key: 'payment',
-            render: (value: any) => <div className='pro-payment'>Paid</div>
+            // render: (value: any) => <div className='pro-payment'>Paid</div>
         },
         {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render: (status: any) => {
-                let color = { backgroundColor: '#FFF0EA', color: '#F86624' };
-                return <div className='status' style={color}>Processing</div>
-            },
+            // render: (status: any) => {
+            //     let color = { backgroundColor: '#FFF0EA', color: '#F86624' };
+            //     return <div className='status' style={color}>Processing</div>
+            // },
         },
         {
             title: 'Action',

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Nav, NavItem, NavLink, TabContainer, TabContent, TabPane } from 'react-bootstrap'
 import { FaExchangeAlt, FaSearch } from 'react-icons/fa'
 import { HiDotsVertical } from 'react-icons/hi';
@@ -12,7 +12,7 @@ const Orders = () => {
             title: <div className='d-flex align-items-center'><input className='input-box me-2' type="checkbox" />Order ID</div>,
             dataIndex: 'orderId',
             key: 'orderId',
-            render: (value: any) => (
+            render: () => (
                 <>
                     <div className='d-flex align-items-center'>
                         <input className='input-box me-2' type="checkbox" />
@@ -24,20 +24,20 @@ const Orders = () => {
             title: 'Products',
             dataIndex: 'product',
             key: 'product',
-            render: (value: any) => (
-                <>
-                    {/* <div className='d-flex align-items-center'>
-                        <input className='input-box me-2' type="checkbox" /> */}
-                    <div className='product'>
-                        <img src={value.image} alt="avatar" />
-                        <div className='product-title'>
-                            <h5>{value.title}</h5>
-                            <p className='mb-0'>{value.additional}</p>
-                        </div>
-                    </div>
-                    {/* </div> */}
-                </>
-            )
+            // render: (value: any) => (
+            //     <>
+            //         {/* <div className='d-flex align-items-center'>
+            //             <input className='input-box me-2' type="checkbox" /> */}
+            //         <div className='product'>
+            //             <img src={value.image} alt="avatar" />
+            //             <div className='product-title'>
+            //                 <h5>{value.title}</h5>
+            //                 <p className='mb-0'>{value.additional}</p>
+            //             </div>
+            //         </div>
+            //         {/* </div> */}
+            //     </>
+            // )
         },
         {
             title: 'Description',

@@ -4,7 +4,7 @@ import Products from '@/components/Products/Products'
 const ProductsPage = () => {
     return (
         <>
-            <PageTitle title='Products' button='Product'  path="/single-product" />
+            <PageTitle title='Products' button='Product'  path="/add-product" />
             <Products />
         </>
     )

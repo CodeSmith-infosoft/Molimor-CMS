@@ -10,7 +10,7 @@ import { IoLogOutSharp } from 'react-icons/io5'
 import { LuFileQuestion } from 'react-icons/lu'
 import { MdAddLocationAlt, MdDashboard, MdSubscriptions } from 'react-icons/md'
 import { PiCourtBasketballFill } from 'react-icons/pi'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 type LayoutProps = {
     children: ReactNode;
@@ -20,11 +20,16 @@ const Layouts = ({ children }: LayoutProps) => {
     const location = useLocation();
     const { pathname } = location;
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate()
 
     const handleCategories = () => {
         setOpen(!open);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        navigate('/login')
+    }
 
     return (
         <>
@@ -68,7 +73,7 @@ const Layouts = ({ children }: LayoutProps) => {
                                 <li><Link to=""><MdSubscriptions size={32} /> Subscription</Link> </li>
                             </ul>
                             <div className='logout-btn'>
-                                <button><IoLogOutSharp size={32} />Log Out</button>
+                                <button onClick={handleLogout}><IoLogOutSharp size={32} />Log Out</button>
                             </div>
                         </div>
                     </div>

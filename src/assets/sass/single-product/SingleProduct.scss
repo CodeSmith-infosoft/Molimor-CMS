@@ -17,6 +17,16 @@
             display: block;
         }
 
+        .feature-input {
+            display: flex;
+
+            .add-feature {
+                cursor: pointer;
+                padding: 15px;
+                color: #777980
+            }
+        }
+
         input {
             @include font(14px, 400, 100%, 'Lato');
             border: 1px solid #F0F1F3;
@@ -43,7 +53,7 @@
                     width: 100% !important;
                     background-color: #FFF7F5 !important;
                     border: 1px solid #F0F1F3 !important;
-                    color: #777980;
+                    color: black;
                     border-radius: 8px;
                     display: flex;
                     justify-content: space-between;
@@ -56,13 +66,53 @@
             }
         }
 
+        .weight-date {
+            background-color: #FFF7F5;
+            border-radius: 8px;
+            border: 1px solid #F0F1F3;
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
 
+            .rs-picker-toggle-wrapper {
+                max-width: 185px;
 
+                .rs-input-group.rs-input-group-inside {
+                    background-color: white;
+                    flex-direction: row-reverse;
+
+                    input {
+                        padding-inline: 10px;
+                        padding-left: 0;
+                        background-color: white;
+                    }
+                }
+            }
+        }
+
+        .weight-add {
+            margin-top: 30px;
+
+            &-btn {
+                @include font(14px, 600, 100%, 'Lato');
+                border-radius: 8px;
+                padding: 11px 14px;
+                background-color: #008000;
+                color: #fff;
+                float: right;
+                display: flex;
+                align-items: center;
+            }
+
+            .remove {
+                background-color: #FF0000;
+            }
+        }
     }
 
     .active-pro {
         .card {
-            padding: 43px 24px;
+            padding: 34px 24px;
             text-align: center;
 
             h3 {
@@ -97,14 +147,15 @@
             .toggle-knob {
                 width: 20px;
                 height: 20px;
-                background-color: red;
                 border-radius: 50%;
                 position: absolute;
                 top: 5px;
                 left: 5px;
                 transition: left 0.3s ease;
+                background-color: #898989;
 
                 &.active {
+                    background-color: red;
                     left: 30px;
                 }
             }
@@ -117,16 +168,13 @@
         }
     }
 
-    .active-pro {
+    .active-weight {
         .card {
-            padding: 43px 24px;
+            border-radius: 8px;
+            border: 1px solid #F0F1F3;
+            padding: 12px 22px;
             text-align: center;
-
-            h3 {
-                text-align: center;
-                padding-top: 16px;
-            }
-
+            background-color: #FFF7F5;
         }
 
         justify-content: center;
@@ -139,6 +187,7 @@
         }
 
         label {
+            padding: 0;
             margin: 0 auto;
         }
 
@@ -154,128 +203,15 @@
             .toggle-knob {
                 width: 20px;
                 height: 20px;
-                background-color: red;
                 border-radius: 50%;
                 position: absolute;
                 top: 5px;
                 left: 5px;
                 transition: left 0.3s ease;
+                background-color: #898989;
 
                 &.active {
-                    left: 30px;
-                }
-            }
-        }
-
-        .label-text {
-            margin-top: 30px;
-            font-size: 36px;
-            font-weight: bold;
-        }
-    }
-
-    .active-pro {
-        .card {
-            padding: 43px 24px;
-            text-align: center;
-
-            h3 {
-                text-align: center;
-                padding-top: 16px;
-            }
-
-        }
-
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-
-
-        input[type="checkbox"] {
-            display: none;
-        }
-
-        label {
-            margin: 0 auto;
-        }
-
-        .toggle-switch {
-            width: 55px;
-            height: 30px;
-            background-color: #ffe6e6;
-            border-radius: 30px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s;
-
-            .toggle-knob {
-                width: 20px;
-                height: 20px;
-                background-color: red;
-                border-radius: 50%;
-                position: absolute;
-                top: 5px;
-                left: 5px;
-                transition: left 0.3s ease;
-
-                &.active {
-                    left: 30px;
-                }
-            }
-        }
-
-        .label-text {
-            margin-top: 30px;
-            font-size: 36px;
-            font-weight: bold;
-        }
-    }
-
-    .active-pro {
-        .card {
-            padding: 43px 24px;
-            text-align: center;
-
-            h3 {
-                text-align: center;
-                padding-top: 16px;
-            }
-
-        }
-
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-
-
-        input[type="checkbox"] {
-            display: none;
-        }
-
-        label {
-            margin: 0 auto;
-        }
-
-        .toggle-switch {
-            width: 55px;
-            height: 30px;
-            background-color: #ffe6e6;
-            border-radius: 30px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s;
-
-            .toggle-knob {
-                width: 20px;
-                height: 20px;
-                background-color: red;
-                border-radius: 50%;
-                position: absolute;
-                top: 5px;
-                left: 5px;
-                transition: left 0.3s ease;
-
-                &.active {
+                    background-color: red;
                     left: 30px;
                 }
             }
@@ -323,7 +259,7 @@
                 width: 100%;
                 background-color: #FFF7F5;
                 border: 1px solid #F0F1F3;
-                color: #777980;
+                color: black;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -343,6 +279,7 @@
         .rs-btn {
             display: block;
         }
+
         button {
             padding: 24px 0;
             background-color: #FFF7F5;
@@ -363,8 +300,10 @@
                     color: #FFFFFF;
                 }
             }
+
             .add-img-btn {
                 margin-top: 16px;
+
                 button {
                     background-color: #FFEDED;
                     color: #E31E24;
@@ -373,6 +312,60 @@
                 }
             }
         }
+
+        .rs-uploader-file-items {
+            .rs-uploader-file-item {
+                display: flex;
+                position: initial;
+                align-items: center;
+                height: 96px;
+                padding: 0;
+                justify-content: space-between;
+
+                .rs-uploader-file-item-preview {
+                    position: initial;
+
+                    img {
+                        object-fit: contain;
+                        width: 94px;
+                    }
+
+                    width: 94px;
+                    height: 94px;
+                }
+
+                .rs-uploader-file-item-panel {
+                    width: 65%;
+
+                    .rs-uploader-file-item-content {
+                        .rs-uploader-file-item-title {
+                            color: black;
+                        }
+
+                        .rs-uploader-file-item-status {
+                            display: none;
+                        }
+                    }
+                }
+
+                .rs-uploader-file-item-btn-remove {
+                    position: initial;
+                    border: 0;
+                    max-width: 40px;
+                    background-color: #fff;
+                    transition: 0.3s linear background-color;
+                }
+
+                &:hover {
+                    .rs-uploader-file-item-btn-remove {
+                        background-color: #f7f7fa;
+                    }
+                }
+            }
+        }
     }
 
+    .dropdown-menu {
+        width: 100%;
+    }
 }

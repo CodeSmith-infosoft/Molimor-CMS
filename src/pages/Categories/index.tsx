@@ -1,6 +1,6 @@
 import Categories from '@/components/categories-components/Categories'
 import PageTitle from '@/components/CommonComponents/PageTitle'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const CategoriesPage = () => {
 

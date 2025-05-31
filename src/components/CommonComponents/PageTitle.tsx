@@ -1,4 +1,3 @@
-import React from 'react'
 import { BsDownload } from 'react-icons/bs'
 import { FaCaretRight, FaPlus } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
@@ -9,10 +8,11 @@ type PageTitleType = {
     cancelBtn?: boolean;
     openCategories?: () => void;
     button?: string;
-    path?: string
+    path?: string;
+    onSubmit?: (data: any) => void
 }
 
-const PageTitle = ({ path, title, subTitle, cancelBtn, button, openCategories }: PageTitleType) => {
+const PageTitle = ({ path, title, subTitle, cancelBtn, button, openCategories, onSubmit }: PageTitleType) => {
     return (
         <section className='page-title'>
             <div className='title'>
@@ -34,14 +34,14 @@ const PageTitle = ({ path, title, subTitle, cancelBtn, button, openCategories }:
                 {
                     cancelBtn ?
                         <>
-                            <Link to=""> <button className='btn-1-cancel'>Cancel</button></Link>
-                            <Link to="/single-product"><button className='btn-1-save'>Save</button></Link>
+                            <Link to="/product"> <button className='btn-1-cancel'>Cancel</button></Link>
+                            <button className='btn-1-save' onClick={onSubmit}>Save</button>
                         </>
                         :
                         <>
                             <Link to=""> <button className='btn-1'><BsDownload /> Export </button></Link>
                             {path ?
-                                <Link rel="stylesheet" to={path}> <button><FaPlus />  Add {button} </button> </Link>
+                                <Link rel="stylesheet" to={path}> <button><FaPlus  />  Add {button} </button> </Link>
                                 :
                                 <button onClick={openCategories}><FaPlus />  Add {button} </button>
                             }

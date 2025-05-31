@@ -1,61 +1,4 @@
-// import React from 'react';
-// import ReactApexChart from 'react-apexcharts';
-
-// const SalesGraph = () => {
-//   const chartData = {
-//     series: [
-//       {
-//         name: "Sales",
-//         data: [120, 200, 150, 300, 280, 400, 350],
-//       }
-//     ],
-//     options: {
-//       chart: {
-//         type: 'area',
-//         height: 350,
-//         zoom: {
-//           enabled: false
-//         }
-//       },
-//        colors: ['#E31E24'],
-//       dataLabels: {
-//         enabled: false
-//       },
-//       stroke: {
-//         curve: 'smooth'
-//       },
-//       title: {
-//         text: 'Monthly Sales Report',
-//         align: 'left'
-//       },
-//       xaxis: {
-//         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
-//       },
-//       yaxis: {
-//         opposite: false
-//       },
-//       legend: {
-//         horizontalAlign: 'left'
-//       }
-//     }
-//   };
-
-//   return (
-//     <section className='sales-graph'>
-//       <h3>Sales Graph</h3>
-//       <ReactApexChart
-//         options={chartData.options}
-//         series={chartData.series}
-//         type="area"
-//         height={350}
-//       />
-//     </section>
-//   );
-// };
-
-// export default SalesGraph;
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const SalesGraph = () => {
@@ -77,17 +20,17 @@ const SalesGraph = () => {
         ],
         options: {
             chart: {
-                type: 'area',
+                type: 'area' as const,
                 height: 265,
                 toolbar: { show: false }
             },
             colors: ['#FF0000'],
             stroke: {
-                curve: 'straight',
+                curve: 'straight' as const,
                 width: 2
             },
             fill: {
-                type: 'gradient',
+                type: 'gradient' as const,
                 gradient: {
                     shade: 'light',
                     gradientToColors: ['#fff5f5'],
@@ -101,7 +44,7 @@ const SalesGraph = () => {
             },
             tooltip: {
                 y: {
-                    formatter: val => `$${val.toFixed(2)}`
+                    formatter: (val: number) => `$${val.toFixed(2)}`
                 }
             },
             xaxis: {

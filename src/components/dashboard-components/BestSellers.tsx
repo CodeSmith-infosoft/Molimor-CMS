@@ -1,4 +1,3 @@
-import React from 'react'
 import { Table } from 'react-bootstrap'
 import avatar from '@/assets/image/avatar-img.png'
 import { FaCaretDown } from 'react-icons/fa'
