@@ -5,6 +5,9 @@ import { Button } from "rsuite";
 import Uploader from "rsuite/esm/Uploader";
 import ErrorMessage from "../ErrorMessage";
 import { SubCategoriestModalPropsType } from "@/types/categoryTypes";
+import { inActiveCategory } from "@/service/asyncStore/action/category";
+import { toast } from "react-toastify";
+import { Form } from "react-bootstrap";
 
 const AddSubCategoryModal = ({
   control,
@@ -38,50 +41,67 @@ const AddSubCategoryModal = ({
     }
   }, [item]);
 
+  const categoryStatusChange = (id: string, isActive: boolean) => {
+    // setLoading(id);
+    inActiveCategory(id, isActive)
+      .then((res) => {
+        const toast2 = res.success ? toast.success : toast.error;
+        toast2(res.message);
+        if (res.success) {
+          // getCategoryData();
+        }
+      })
+      // .finally(() => setLoading(""));
+  };
+
   return (
-    <div>
-      <h2>Add Category</h2>
-      <p>Category Name</p>
-      <input type="text" placeholder="Green Tea" {...register("name")} />
-      <ErrorMessage message={errors.name?.message} />
-      <p>Image</p>
-      <div className="img-upload rsuite-image-upload-field">
-        <Controller
-          name="image"
-          control={control}
-          render={({ field }) => (
-            <Uploader
-              onChange={(fileList) => handleUpload(fileList, field)}
-              listType="picture-text"
-              multiple={true}
-              action=""
-              accept="image/*"
-              fileList={fileList}
-            >
-              <div className="upload-trigger">
-                <Button appearance="ghost" color="red" className="add-file-btn">
-                  Add File
-                </Button>
-                <div className="drag-text">Or drag and drop files</div>
-              </div>
-            </Uploader>
-          )}
-        />
-        <ErrorMessage message={errors.image?.message} />
-      </div>
-      <div className="btn-common">
-        <button
-          className="btn-cencal"
-          // onClick={() => handleCategories(setFileList)}
-        >
-          Cancel
-        </button>
-        <button
-          className="me-0 btn-add"
-          onClick={handleSubmit((data) => onSubmit(data, setFileList))}
-        >
-          {item?.name ? "Update" : "Add"} Category
-        </button>
+    <div className="add-subcatagory">
+      {/* <div className="categoryToggle">
+        <label className="toggel-label">Category Visibility</label>
+        <Form>
+          <Form.Check
+            type="switch"
+            id="custom-switch"
+            // checked={value}
+            // onChange={() => categoryStatusChange(item._id, !value)}
+            className="red-toggle"
+          /> Visible on site
+        </Form>
+      </div> */}
+      <div className="add-subcatagory-container">
+        <h2>{item?.name ? "Update" : "Add"} Sub Category</h2>
+        <p>Sub Category Name</p>
+        <input type="text" placeholder="Green Tea" {...register("name")} />
+        <ErrorMessage message={errors.name?.message} />
+        <p>Image</p>
+        <div className="img-upload rsuite-image-upload-field">
+          <Controller
+            name="image"
+            control={control}
+            render={({ field }) => (
+              <Uploader
+                onChange={(fileList) => handleUpload(fileList, field)}
+                listType="picture-text"
+                multiple={true}
+                action=""
+                accept="image/*"
+                fileList={fileList}
+              >
+                <div className="upload-trigger">
+                  <Button
+                    appearance="ghost"
+                    color="red"
+                    className="add-file-btn"
+                  >
+                    Add File
+                  </Button>
+                  <div className="drag-text">Or drag and drop files</div>
+                </div>
+              </Uploader>
+            )}
+          />
+          <ErrorMessage message={errors.image?.message} />
+        </div>
       </div>
     </div>
   );

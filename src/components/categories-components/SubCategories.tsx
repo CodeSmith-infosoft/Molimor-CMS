@@ -2,14 +2,8 @@ import { categoryListType } from "@/types/categoryTypes";
 import CommonTable from "../CommonComponents/CommonTable";
 
 import { useContext, useEffect, useRef, useState } from "react";
-import { Form, Overlay, Tooltip } from "react-bootstrap";
+import { Col, Form, Overlay, Row, Tooltip } from "react-bootstrap";
 import { HiDotsVertical } from "react-icons/hi";
-import {
-  addCategory,
-  getCategoryList,
-  inActiveCategory,
-  updateCategory,
-} from "@/service/asyncStore/action/category";
 import { MainContext } from "@/context/mainContext";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -20,6 +14,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { getImageAsBlob } from "@/utils/helper";
 import PageTitle from "../CommonComponents/PageTitle";
 import AddSubCategoryModal from "./AddSubCategoryModal";
+import {
+  addSubCategory,
+  getSubCategoryList,
+  inActiveSubcategory,
+  updateSubCategory,
+} from "@/service/asyncStore/action/subCategory";
 
 const SubCategories = () => {
   const {
@@ -37,7 +37,7 @@ const SubCategories = () => {
     },
   });
   const { categoryChange }: any = useContext(MainContext);
-  <PageTitle title='Categories' button='Categories' />
+  <PageTitle title="Categories" button="Categories" />;
   const refs = useRef<any>({});
   const [show, setShow] = useState("");
   const [isEdit, setIsEdit] = useState<categoryListType | null>(null);
@@ -56,17 +56,17 @@ const SubCategories = () => {
 
   const columns = [
     {
-      title: "Category Name",
+      title: "Sub Category Name",
       dataIndex: "name",
       key: "name",
       headerClass: "th-font",
-      render: (value: string, item: categoryListType) => (
+      render: (value: string) => (
         <>
           <div className="product">
-            <img
+            {/* <img
               src={import.meta.env.VITE_IMAGE_DOMAIN + item.image}
               alt="avatar"
-            />
+            /> */}
             <div className="product-title">
               <h5>{value}</h5>
             </div>
@@ -139,7 +139,7 @@ const SubCategories = () => {
 
   const categoryStatusChange = (id: string, isActive: boolean) => {
     setLoading(true);
-    inActiveCategory(id, isActive)
+    inActiveSubcategory(id, isActive)
       .then((res) => {
         const toast2 = res.success ? toast.success : toast.error;
         toast2(res.message);
@@ -151,7 +151,7 @@ const SubCategories = () => {
   };
 
   const getCategoryData = () => {
-    getCategoryList({ page: pagination.page, limit: pagination.limit }).then(
+    getSubCategoryList({ page: pagination.page, limit: pagination.limit }).then(
       (res) => {
         if (res.success) {
           setCategoryList(res.data.data);
@@ -166,10 +166,7 @@ const SubCategories = () => {
     );
   };
 
-  const onSubmit = async (
-    data: categoryFormSchemaType,
-    setFileList: React.Dispatch<any>
-  ) => {
+  const onSubmit = async (data: categoryFormSchemaType) => {
     const formData = new FormData();
     formData.append("name", data.name);
     if (isEdit?._id && !(data.image instanceof File)) {
@@ -181,42 +178,54 @@ const SubCategories = () => {
 
     const action = () =>
       isEdit?._id
-        ? updateCategory(formData, isEdit._id)
-        : addCategory(formData);
+        ? updateSubCategory(formData, isEdit._id)
+        : addSubCategory(formData);
     action().then((res) => {
       const toast2 = res.success ? toast.success : toast.error;
       toast2(res.message);
       if (res.success) {
-        setFileList(null);
         reset();
         getCategoryData();
       }
     });
   };
 
+  const handleCancel = () => {};
+
   return (
     <>
+      <PageTitle
+        title="Sub Categories"
+        button="subCategories"
+        onCancel={handleCancel}
+        onSubmit={handleSubmit(onSubmit)}
+      />
       <section className="categories">
-        <CommonTable
-          header={columns}
-          data={categoryList}
-          isPagination
-          limit={pagination.limit}
-          page={pagination.page}
-          totalPages={pagination.totalPages}
-          totalRecords={pagination.totalRecords}
-          onPageChange={setPagination}
-        />
-
-        <AddSubCategoryModal
-          control={control}
-          register={register}
-          onSubmit={onSubmit}
-          handleSubmit={handleSubmit}
-          errors={errors}
-          item={isEdit}
-          setValue={setValue}
-        />
+        <Row>
+          <Col md={8}>
+            <CommonTable
+              header={columns}
+              data={categoryList}
+              isPagination
+              limit={pagination.limit}
+              page={pagination.page}
+              totalPages={pagination.totalPages}
+              totalRecords={pagination.totalRecords}
+              onPageChange={setPagination}
+            />
+          </Col>
+          <Col md={4}>
+            <AddSubCategoryModal
+              control={control}
+              register={register}
+              onSubmit={onSubmit}
+              handleSubmit={handleSubmit}
+              errors={errors}
+              item={isEdit}
+              setValue={setValue}
+            />
+          </Col>
+        </Row>
       </section>
     </>
   );

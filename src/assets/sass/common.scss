@@ -39,3 +39,50 @@
     background-color: #0d6efd;
   }
 }
+
+.rsuite-image-upload-field {
+  .rs-uploader-trigger-btn {
+    border: 1.3px solid transparent;
+    border-image: repeating-linear-gradient(
+        45deg,
+        #777980 0,
+        #777980 5px,
+        transparent 5px,
+        transparent 10px
+      )
+      1 round;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 65px;
+    gap: 15px;
+
+    .add-file-btn {
+      width: 100%;
+      max-width: 138px;
+      border-color: #e31e24;
+    }
+  }
+
+  .rs-uploader-file-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .rs-uploader-file-item-preview {
+      img {
+        object-fit: contain;
+      }
+    }
+    .rs-uploader-file-item-content {
+      .rs-uploader-file-item-title {
+        color: black;
+      }
+
+      .rs-uploader-file-item-status {
+        display: none;
+      }
+    }
+  }
+}

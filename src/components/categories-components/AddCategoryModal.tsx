@@ -49,7 +49,7 @@ const AddCategoryModal = ({
       centered
     >
       <Modal.Body>
-        <h2>Add Category</h2>
+        <h2>{item?.name ? "Update" : "Add"} Category</h2>
         <p>Category Name</p>
         <input type="text" placeholder="Green Tea" {...register("name")} />
         <ErrorMessage message={errors.name?.message} />
