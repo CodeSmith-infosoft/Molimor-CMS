@@ -1,0 +1,41 @@
+.two-line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tooltip-inner {
+  border: 1px solid gray;
+  background-color: white !important;
+  padding: 4px !important;
+
+  .table {
+    border-radius: 4px;
+    margin: 0px;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.tooltip-action-button {
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .button-danger {
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #e31e24;
+  }
+
+  .button-primary {
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #0d6efd;
+  }
+}

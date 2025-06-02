@@ -6,6 +6,7 @@ export type ProductDataType = {
     salesCount: number;
     subCategoryName: string;
     quantity: number;
+    _id: string;
 }
 
 export type ProductVariantType = {

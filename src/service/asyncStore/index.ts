@@ -16,13 +16,7 @@ api.interceptors.request.use(
         if (token) {
             config.headers.Authorization = token;
         }
-        const lang = localStorage.getItem("lang") || "en";
 
-        if (config.params) {
-            config.params.lang = lang;
-        } else {
-            config.params = { lang };
-        }
         return config;
     },
     (error: AxiosError) => {

@@ -22,10 +22,15 @@ import ErrorMessage from "../ErrorMessage";
 import PageTitle from "../CommonComponents/PageTitle";
 import { RxCross2 } from "react-icons/rx";
 import { getActiveSubCategoryList } from "@/service/asyncStore/action/category";
-import { toBase64 } from "@/utils/helper";
-import { addSingleProduct } from "@/service/asyncStore/action/product";
+import { getImageAsBlob, toBase64 } from "@/utils/helper";
+import {
+  addSingleProduct,
+  getProductByID,
+  updateProduct,
+} from "@/service/asyncStore/action/product";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { ProductVariantType } from "@/types/productDataTypes";
 
 type SingleProductFormData = z.infer<typeof SingleProductSchema>;
 
@@ -33,7 +38,8 @@ const SingleProduct = () => {
   const [currentFeature, setCurrentFeature] = useState("");
   const [categoryData, setCategoryData] = useState<any>({});
   const [fileList, setFileList] = useState<any>([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { id } = useParams();
   const {
     register,
     control,
@@ -81,6 +87,44 @@ const SingleProduct = () => {
     }
   }, [watch("features")]);
 
+  useEffect(() => {
+    if (id) {
+      getProductByID(id).then((res) => {
+        if (res.success) {
+          const data = res.data;
+          setValue("productCategory", data.category.name);
+          setValue("productSubCategory", data.subCategoryId._id);
+          setValue("isActiveProduct", data.isActive);
+          setValue("sku", data.sku);
+          setValue("stock", data.stock.toString());
+          setValue("quantity", data.quantity.toString());
+          setValue("hsnNumber", data.hsnCode.toString());
+          setValue("gstPercentage", data.gst.split("%")[0]);
+          setValue("productName", data.title);
+          setValue("description", data.description);
+          setValue("benefits", data.benefits);
+          setValue("features", data.isFeatured);
+          const weightData = data.variants.map(
+            (variant: ProductVariantType) => ({
+              weightUnit: variant.weight.split(" ")[1],
+              weightValue: variant.weight.split(" ")[0],
+              price: variant.price.toString(),
+              mrp: variant.mrp.toString(),
+              discountPrice: variant?.discountPrice?.toString() || "",
+              startSaleOn: variant.startSaleOn
+                ? new Date(variant.startSaleOn)
+                : null,
+              endSaleOn: variant.endSaleOn ? new Date(variant.endSaleOn) : null,
+              saleStatus: variant.saleStatus,
+            })
+          );
+          setValue("weightVariants", weightData);
+          handleImageUpdateChange(data.image);
+        }
+      });
+    }
+  }, [id]);
+
   const {
     fields: weightFields,
     append: appendWeight,
@@ -113,7 +157,7 @@ const SingleProduct = () => {
     }
   };
 
-  const onSubmit = (data: SingleProductFormData) => {
+  const onSubmit = async (data: SingleProductFormData) => {
     const formData = new FormData();
     formData.append("title", data.productName);
     data.features.forEach((item, index) => {
@@ -161,20 +205,40 @@ const SingleProduct = () => {
         );
       }
     });
-    // formData.append(`image`, "")
-    fileList.map((file: any) => {
-      formData.append(`image`, file.blobFile);
-    });
+    
+    await Promise.all(
+      fileList.map(async (file: any, index: number) => {
+        if (id) {
+          if (file.blobFile) {
+            formData.append(`image`, file.blobFile);
+          } else {
+            const blob = await getImageAsBlob(file.url);
+            formData.append(`image`, blob);
+          }
+        } else {
+          formData.append(`image`, file.blobFile);
+        }
+      })
+    );
 
-    addSingleProduct(formData).then((res) => {
+    if (id) {
+      formData.delete("subCategoryId");
+      formData.delete("sku");
+    }
+
+    const action = () =>
+      id ? updateProduct(formData, id) : addSingleProduct(formData);
+    action().then((res) => {
       const toast2 = res.success ? toast.success : toast.error;
       toast2(res.message);
       if (res.success) {
-        reset()
-        navigate('/products')
+        reset();
+        navigate("/product");
       }
     });
   };
+
+  console.log(errors, getValues("images"));
 
   const removeFeature = (index: number) => {
     const current = getValues("features") || [];
@@ -195,25 +259,39 @@ const SingleProduct = () => {
     });
   };
 
-  console.log(errors, getValues("images"));
-
   const handleFeildChange = async (newFileList: any, field: any) => {
-    let formValue: Blob[] = [];
+    const formValue: Blob[] = [];
     const updatedList = await Promise.all(
       newFileList.map(async (fileWrapper: any) => {
         // Add preview URL if not present
         if (!fileWrapper.url && fileWrapper.blobFile) {
           const base64 = await toBase64(fileWrapper.blobFile);
           formValue.push(fileWrapper.blobFile);
-          console.log(fileWrapper.blobFile instanceof File);
           return { ...fileWrapper, url: base64, name: fileWrapper.name };
         }
-        formValue.push(fileWrapper.blobFile);
+
+        formValue.push(fileWrapper.url);
         return fileWrapper;
       })
     );
     setFileList(updatedList);
     field.onChange(formValue);
+  };
+
+  const handleImageUpdateChange = async (newFileList: any) => {
+    const formValue: File | string[] = [];
+    const updatedList = await Promise.all(
+      newFileList.map((fileWrapper: string) => {
+        formValue.push(import.meta.env.VITE_IMAGE_DOMAIN + fileWrapper);
+        return {
+          url: import.meta.env.VITE_IMAGE_DOMAIN + fileWrapper,
+          name: fileWrapper.split("/").at(-1),
+        };
+      })
+    );
+
+    setFileList(updatedList);
+    setValue("images", formValue);
   };
 
   return (
@@ -515,19 +593,6 @@ const SingleProduct = () => {
                           />
                         </Col>
                         <Col>
-                          <label htmlFor="">Regular Price</label>
-                          <input
-                            type="text"
-                            placeholder="Regular Price"
-                            {...register(`weightVariants.${index}.price`)}
-                          />
-                          <ErrorMessage
-                            message={
-                              errors.weightVariants?.[index]?.price?.message
-                            }
-                          />
-                        </Col>
-                        <Col>
                           <label htmlFor="">MRP price</label>
                           <input
                             type="text"
@@ -537,6 +602,19 @@ const SingleProduct = () => {
                           <ErrorMessage
                             message={
                               errors.weightVariants?.[index]?.mrp?.message
+                            }
+                          />
+                        </Col>
+                        <Col>
+                          <label htmlFor="">Regular Price</label>
+                          <input
+                            type="text"
+                            placeholder="Regular Price"
+                            {...register(`weightVariants.${index}.price`)}
+                          />
+                          <ErrorMessage
+                            message={
+                              errors.weightVariants?.[index]?.price?.message
                             }
                           />
                         </Col>
@@ -687,7 +765,7 @@ const SingleProduct = () => {
                           handleFeildChange(fileList, field)
                         }
                       >
-                        <Button>
+                        <div className="upload-button">
                           <div className="img-logo">
                             <BsFileImageFill size={18} />
                           </div>
@@ -699,7 +777,7 @@ const SingleProduct = () => {
                           <div className="add-img-btn">
                             <button type="button">Add Image</button>
                           </div>
-                        </Button>
+                        </div>
                       </Uploader>
                     )}
                   />

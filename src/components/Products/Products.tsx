@@ -1,11 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CommonTable from "../CommonComponents/CommonTable";
 import { HiDotsVertical } from "react-icons/hi";
-import { getAllProductsList } from "@/service/asyncStore/action/product";
-import { OverlayTrigger, Table, Tooltip } from "react-bootstrap";
+import {
+  deleteProduct,
+  getAllProductsList,
+  toggleActiveStateById,
+} from "@/service/asyncStore/action/product";
+import { Overlay, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { ProductDataType, ProductVariantType } from "@/types/productDataTypes";
+import ConfirmationModal from "../ConfirmationModalProps";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
+  const navigate = useNavigate();
   const [productData, setProductData] = useState<ProductDataType[]>([]);
   const [pagination, setPagination] = useState({
     page: 0,
@@ -13,19 +21,16 @@ const Products = () => {
     totalPages: 0,
     totalRecords: 0,
   });
+  const refs = useRef<any>({});
+  const [show, setShow] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [productToDelete, setProductToDelete] =
+    useState<ProductDataType | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getAllProductsList({ page: pagination.page, limit: pagination.limit }).then(
-      (res) => {
-        setProductData(res.data.products);
-        setPagination({
-          page: res.data.page,
-          limit: 10,
-          totalPages: res.data.totalPages,
-          totalRecords: res.data.totalRecords,
-        });
-      }
-    );
+    getProductData()
   }, []);
   const columns = [
     {
@@ -103,32 +108,172 @@ const Products = () => {
             </Tooltip>
           }
         >
-          <span style={{ cursor: "pointer", textDecoration: "underline" }}>
-            {value[0].price}
-          </span>
+          <span className="cursor-pointer">{value[0].price}</span>
         </OverlayTrigger>
       ),
     },
     {
+      title: "Status",
+      dataIndex: "isActive",
+      key: "isActive",
+      cellClass: "product-list-fade-color product-status",
+      render: (value: boolean, item: ProductDataType) => {
+        return (
+          <>
+            {!loading ? <label>
+              <input
+                type="checkbox"
+                checked={value}
+                onChange={() => handleActiveToggle(item._id, !value)}
+              />
+              <div className="toggle-switch">
+                <div className={`toggle-knob ${value ? "active" : ""}`} />
+              </div>
+            </label> : <span className="spinner" />}
+          </>
+        );
+      },
+    },
+    {
       title: "Action",
-      key: "action",
+      key: "_id",
       dataIndex: "_id",
-      render: () => <HiDotsVertical />,
+      render: (value: string, item: ProductDataType) => (
+        <>
+          <span
+            className="cursor-pointer position-relative"
+            ref={(el) => {
+              refs.current[value] = el;
+            }}
+            onClick={() => setShow((prev) => (prev === value ? "" : value))}
+          >
+            <HiDotsVertical />
+          </span>
+          <Overlay
+            placement={"left"}
+            target={refs.current[value]}
+            show={show === value}
+          >
+            <Tooltip id="button-tooltip">
+              <div className="tooltip-action-button">
+                <button
+                  className="button-primary"
+                  onClick={() => handleEdit(value)}
+                >
+                  Update
+                </button>
+                <button
+                  className="button-danger"
+                  onClick={() => handleDelete(item)}
+                >
+                  Delete
+                </button>
+              </div>
+            </Tooltip>
+          </Overlay>
+        </>
+      ),
     },
   ];
 
+  const handleActiveToggle = (id: string, status: boolean) => {
+    setLoading(true);
+    toggleActiveStateById(id, status)
+      .then((res) => {
+        const toast2 = res.success ? toast.success : toast.error;
+        toast2(res.message);
+        if (res.success) {
+          getProductData()
+        }
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const getProductData = () => {
+    getAllProductsList({ page: pagination.page, limit: pagination.limit }).then(
+      (res) => {
+        setProductData(res.data.products);
+        setPagination({
+          page: res.data.page,
+          limit: 10,
+          totalPages: res.data.totalPages,
+          totalRecords: res.data.totalRecords,
+        });
+      }
+    );
+  };
+
+  const handleDelete = (product: ProductDataType) => {
+    setProductToDelete(product);
+    setShowDeleteModal(true);
+    setShow("");
+  };
+
+  const handleEdit = (id: string) => {
+    navigate(`/update-product/${id}`);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!productToDelete) return;
+    setIsDeleting(true);
+
+    try {
+      deleteProduct(productToDelete._id).then((res) => {
+        const toast2 = res.success ? toast.success : toast.error;
+        toast2(res.message);
+
+        if (res.success) {
+          setProductData((prev) =>
+            prev.filter((p) => p._id !== productToDelete._id)
+          );
+        }
+      });
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteModal(false);
+      setProductToDelete(null);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    if (!isDeleting) {
+      setShowDeleteModal(false);
+      setProductToDelete(null);
+    }
+  };
+
   return (
-    <section>
-      <CommonTable
-        header={columns}
-        data={productData}
-        isPagination
-        limit={pagination.limit}
-        page={pagination.page}
-        totalPages={pagination.totalPages}
-        totalRecords={pagination.totalRecords}
+    <>
+      <section>
+        <CommonTable
+          header={columns}
+          data={productData}
+          isPagination
+          limit={pagination.limit}
+          page={pagination.page}
+          totalPages={pagination.totalPages}
+          totalRecords={pagination.totalRecords}
+        />
+      </section>
+      <ConfirmationModal
+        show={showDeleteModal}
+        onHide={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Product"
+        message={
+          <>
+            Are you sure you want to delete <b>{productToDelete?.title}</b>?
+            This action cannot be undone.
+          </>
+        }
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="danger"
+        loading={isDeleting}
       />
-    </section>
+    </>
   );
 };
 
