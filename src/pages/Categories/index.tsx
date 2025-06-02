@@ -6,8 +6,11 @@ const CategoriesPage = () => {
 
   const [openCategories, setOpenCategories] = useState(false)
 
-  const handleCategories = () => {
+  const handleCategories = (setFileList?: React.Dispatch<any>) => {
     setOpenCategories(!openCategories)
+    if (setFileList) {
+      setFileList(null)
+    }
   }
 
   return (

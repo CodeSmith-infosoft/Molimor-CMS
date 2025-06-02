@@ -12,20 +12,16 @@ import {
 } from "@/service/asyncStore/action/category";
 import { MainContext } from "@/context/mainContext";
 import { toast } from "react-toastify";
-import AddCategoryModal from "./AddCategoryModal";
 import { useForm } from "react-hook-form";
 import categoryFormSchema, {
   categoryFormSchemaType,
 } from "@/service/form-schema/category.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getImageAsBlob } from "@/utils/helper";
+import PageTitle from "../CommonComponents/PageTitle";
+import AddSubCategoryModal from "./AddSubCategoryModal";
 
-type Categoriestype = {
-  openCategories: boolean;
-  handleCategories: (setFileList?: React.Dispatch<any>) => void;
-};
-
-const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
+const SubCategories = () => {
   const {
     register,
     control,
@@ -41,11 +37,12 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
     },
   });
   const { categoryChange }: any = useContext(MainContext);
+  <PageTitle title='Categories' button='Categories' />
   const refs = useRef<any>({});
   const [show, setShow] = useState("");
   const [isEdit, setIsEdit] = useState<categoryListType | null>(null);
   const [categoryList, setCategoryList] = useState<categoryListType[]>([]);
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
@@ -56,12 +53,6 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
   useEffect(() => {
     getCategoryData();
   }, [categoryChange]);
-
-  useEffect(() => {
-    if (!openCategories) {
-      setIsEdit(null);
-    }
-  }, [openCategories]);
 
   const columns = [
     {
@@ -89,7 +80,7 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
       dataIndex: "isActive",
       render: (value: boolean, item: categoryListType) => (
         <>
-          {loading === item._id ? (
+          {loading ? (
             <span className="spinner" />
           ) : (
             <Form>
@@ -143,14 +134,11 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
 
   const handleEdit = (item: categoryListType) => {
     setIsEdit(item);
-    handleCategories();
     setShow("");
-    // setValue("name", item.name);
-    // setValue("image", item.image);
   };
 
   const categoryStatusChange = (id: string, isActive: boolean) => {
-    setLoading(id);
+    setLoading(true);
     inActiveCategory(id, isActive)
       .then((res) => {
         const toast2 = res.success ? toast.success : toast.error;
@@ -159,7 +147,7 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
           getCategoryData();
         }
       })
-      .finally(() => setLoading(''));
+      .finally(() => setLoading(false));
   };
 
   const getCategoryData = () => {
@@ -199,7 +187,6 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
       const toast2 = res.success ? toast.success : toast.error;
       toast2(res.message);
       if (res.success) {
-        handleCategories();
         setFileList(null);
         reset();
         getCategoryData();
@@ -208,31 +195,31 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
   };
 
   return (
-    <section className="categories">
-      <CommonTable
-        header={columns}
-        data={categoryList}
-        isPagination
-        limit={pagination.limit}
-        page={pagination.page}
-        totalPages={pagination.totalPages}
-        totalRecords={pagination.totalRecords}
-        onPageChange={setPagination}
-      />
+    <>
+      <section className="categories">
+        <CommonTable
+          header={columns}
+          data={categoryList}
+          isPagination
+          limit={pagination.limit}
+          page={pagination.page}
+          totalPages={pagination.totalPages}
+          totalRecords={pagination.totalRecords}
+          onPageChange={setPagination}
+        />
 
-      <AddCategoryModal
-        handleCategories={handleCategories}
-        openCategories={openCategories}
-        control={control}
-        register={register}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
-        errors={errors}
-        item={isEdit}
-        setValue={setValue}
-      />
-    </section>
+        <AddSubCategoryModal
+          control={control}
+          register={register}
+          onSubmit={onSubmit}
+          handleSubmit={handleSubmit}
+          errors={errors}
+          item={isEdit}
+          setValue={setValue}
+        />
+      </section>
+    </>
   );
 };
 
-export default Categories;
+export default SubCategories;

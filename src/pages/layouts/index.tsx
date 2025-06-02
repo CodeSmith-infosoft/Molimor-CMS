@@ -41,16 +41,14 @@ const Layouts = ({ children }: LayoutProps) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const [categoryList, setCategoryList] = useState<categoryListType[]>([]);
-  console.log(id);
+  
   useEffect(() => {
-    getCategoryList().then((res) => {
+    getCategoryList({}).then((res) => {
       if (res.success) {
         setCategoryList(res.data);
       }
     });
   }, [categoryChange]);
-
-  console.log(categoryList);
 
   const handleCategories = () => {
     setOpen(!open);

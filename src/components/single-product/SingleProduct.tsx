@@ -14,7 +14,7 @@ import {
 import { BsFileImageFill } from "react-icons/bs";
 import { FaAngleDown, FaCaretDown, FaPlus } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
-import { Uploader, Button, DatePicker } from "rsuite";
+import { Uploader, DatePicker } from "rsuite";
 import { z } from "zod";
 import "rsuite/dist/rsuite.css";
 import SingleProductSchema from "@/service/form-schema/product.schema";
@@ -207,7 +207,7 @@ const SingleProduct = () => {
     });
     
     await Promise.all(
-      fileList.map(async (file: any, index: number) => {
+      fileList.map(async (file: any) => {
         if (id) {
           if (file.blobFile) {
             formData.append(`image`, file.blobFile);

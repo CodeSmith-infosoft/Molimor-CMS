@@ -16,7 +16,7 @@ const Products = () => {
   const navigate = useNavigate();
   const [productData, setProductData] = useState<ProductDataType[]>([]);
   const [pagination, setPagination] = useState({
-    page: 0,
+    page: 1,
     limit: 10,
     totalPages: 0,
     totalRecords: 0,
@@ -27,11 +27,11 @@ const Products = () => {
   const [productToDelete, setProductToDelete] =
     useState<ProductDataType | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState('');
 
   useEffect(() => {
-    getProductData()
-  }, []);
+    getProductData();
+  }, [pagination.page]);
   const columns = [
     {
       // title: <div className='d-flex align-items-center'><input className='input-box me-2' type="checkbox" />Products</div>,
@@ -120,16 +120,20 @@ const Products = () => {
       render: (value: boolean, item: ProductDataType) => {
         return (
           <>
-            {!loading ? <label>
-              <input
-                type="checkbox"
-                checked={value}
-                onChange={() => handleActiveToggle(item._id, !value)}
-              />
-              <div className="toggle-switch">
-                <div className={`toggle-knob ${value ? "active" : ""}`} />
-              </div>
-            </label> : <span className="spinner" />}
+            {loading !== item._id ? (
+              <label>
+                <input
+                  type="checkbox"
+                  checked={value}
+                  onChange={() => handleActiveToggle(item._id, !value)}
+                />
+                <div className="toggle-switch">
+                  <div className={`toggle-knob ${value ? "active" : ""}`} />
+                </div>
+              </label>
+            ) : (
+              <span className="spinner" />
+            )}
           </>
         );
       },
@@ -177,16 +181,16 @@ const Products = () => {
   ];
 
   const handleActiveToggle = (id: string, status: boolean) => {
-    setLoading(true);
+    setLoading(id);
     toggleActiveStateById(id, status)
       .then((res) => {
         const toast2 = res.success ? toast.success : toast.error;
         toast2(res.message);
         if (res.success) {
-          getProductData()
+          getProductData();
         }
       })
-      .finally(() => setLoading(false));
+      .finally(() => setLoading(''));
   };
 
   const getProductData = () => {
@@ -255,6 +259,7 @@ const Products = () => {
           page={pagination.page}
           totalPages={pagination.totalPages}
           totalRecords={pagination.totalRecords}
+          onPageChange={setPagination}
         />
       </section>
       <ConfirmationModal

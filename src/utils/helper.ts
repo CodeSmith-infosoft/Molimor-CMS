@@ -10,3 +10,16 @@ export async function getImageAsBlob(url: string) {
   const response = await fetch(url);
   return await response.blob();
 }
+
+export const getParamString = (object: any) => {
+  const params = new URLSearchParams();
+
+  Object.entries(object).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      //@ts-ignore
+      params.append(key, value);
+    }
+  });
+
+  return params.toString();
+};

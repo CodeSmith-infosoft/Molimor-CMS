@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Pagination } from "react-bootstrap";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 
@@ -7,7 +7,14 @@ interface PaginationProps {
   page?: number;
   totalPages?: number;
   totalRecords?: number;
-  onPageChange: (page: number) => void;
+  onPageChange: Dispatch<
+    SetStateAction<{
+      page: number;
+      limit: number;
+      totalPages: number;
+      totalRecords: number;
+    }>
+  >;
 }
 
 const TablePagination: React.FC<PaginationProps> = ({
@@ -19,7 +26,7 @@ const TablePagination: React.FC<PaginationProps> = ({
 }) => {
   const getPageNumbers = () => {
     const pageNumbers: number[] = [];
-    const maxPageButtons = 5;
+    const maxPageButtons = 3;
     const halfRange = Math.floor(maxPageButtons / 2);
 
     let startPage = Math.max(1, page - halfRange);
@@ -45,54 +52,71 @@ const TablePagination: React.FC<PaginationProps> = ({
   const fromRecord = (page - 1) * limit + 1;
   const toRecord = Math.min(page * limit, totalRecords);
 
-  return totalPages > 1 ? (
+  return (
     <div className="table-pagination">
       <p className="mb-0">
         Showing {fromRecord}-{toRecord} from {totalRecords}
       </p>
-      <Pagination className="mb-0">
-        <Pagination.First onClick={() => onPageChange(1)} disabled={page === 1}>
-          <FaCaretLeft size={22} />
-        </Pagination.First>
-
-        {startPage > 1 && (
-          <>
-            <Pagination.Item onClick={() => onPageChange(1)}>
-              {1}
-            </Pagination.Item>
-            {startPage > 2 && <Pagination.Ellipsis />}
-          </>
-        )}
-
-        {pageNumbers.map((pageNumber) => (
-          <Pagination.Item
-            key={pageNumber}
-            active={pageNumber === page}
-            onClick={() => onPageChange(pageNumber)}
+      {totalPages > 1 ? (
+        <Pagination className="mb-0">
+          <Pagination.First
+            onClick={() =>
+              onPageChange((prev) => ({ ...prev, page: page - 1 }))
+            }
+            disabled={page === 1}
           >
-            {pageNumber}
-          </Pagination.Item>
-        ))}
+            <FaCaretLeft size={22} />
+          </Pagination.First>
 
-        {endPage < totalPages && (
-          <>
-            {endPage < totalPages - 1 && <Pagination.Ellipsis />}
-            <Pagination.Item onClick={() => onPageChange(totalPages)}>
-              {totalPages}
+          {startPage > 1 && (
+            <>
+              <Pagination.Item
+                onClick={() => onPageChange((prev) => ({ ...prev, page: 1 }))}
+              >
+                {1}
+              </Pagination.Item>
+              {startPage > 2 && <Pagination.Ellipsis />}
+            </>
+          )}
+
+          {pageNumbers.map((pageNumber) => (
+            <Pagination.Item
+              key={pageNumber}
+              active={pageNumber === page}
+              onClick={() =>
+                onPageChange((prev) => ({ ...prev, page: pageNumber }))
+              }
+            >
+              {pageNumber}
             </Pagination.Item>
-          </>
-        )}
+          ))}
 
-        <Pagination.Last
-          onClick={() => onPageChange(totalPages)}
-          disabled={page === totalPages}
-        >
-          <FaCaretRight size={22} />
-        </Pagination.Last>
-      </Pagination>
+          {endPage < totalPages && (
+            <>
+              {endPage < totalPages - 1 && <Pagination.Ellipsis />}
+              <Pagination.Item
+                onClick={() =>
+                  onPageChange((prev) => ({ ...prev, page: totalPages }))
+                }
+              >
+                {totalPages}
+              </Pagination.Item>
+            </>
+          )}
+
+          <Pagination.Last
+            onClick={() =>
+              onPageChange((prev) => ({ ...prev, page: page + 1 }))
+            }
+            disabled={page === totalPages}
+          >
+            <FaCaretRight size={22} />
+          </Pagination.Last>
+        </Pagination>
+      ) : (
+        <></>
+      )}
     </div>
-  ) : (
-    <></>
   );
 };
 

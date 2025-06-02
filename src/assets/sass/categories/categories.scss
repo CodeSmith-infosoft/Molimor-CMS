@@ -1,144 +1,185 @@
-@import '../mixin';
+@import "../mixin";
 
 .categories {
-    table {
-        thead {
-            tr {
-                .th-font {
-                    @include font(16px, 700);
-                }
-            }
+  table {
+    thead {
+      tr {
+        .th-font {
+          @include font(16px, 700);
         }
-
-        tbody {
-            tr {
-                td {
-                    @include font(16px, 500);
-                    color: #777980;
-
-                    h5 {
-                        color: #000000;
-                        @include font(16px, 500);
-                    }
-                }
-            }
-        }
+      }
     }
 
+    tbody {
+      tr {
+        td {
+          @include font(16px, 500);
+          color: #777980;
 
+          h5 {
+            color: #000000;
+            @include font(16px, 500);
+          }
+        }
+      }
+    }
+  }
 }
 
 .custom-modal-dialog {
+  @media (min-width: 992px) {
+    .modal-lg,
+    .modal-xl {
+      --bs-modal-width: 640px !important;
+    }
+  }
 
-    @media (min-width: 992px) {
+  .modal-body {
+    padding: 40px;
 
-        .modal-lg,
-        .modal-xl {
-            --bs-modal-width: 640px !important;
-        }
+    h2 {
+      @include font(32px, 700);
     }
 
-    .modal-body {
-        padding: 40px;
+    p {
+      padding-top: 30px;
+      @include font(18px, 700);
+      color: #777980;
+      padding-bottom: 13px;
+    }
 
-        h2 {
-            @include font(32px, 700)
-        }
+    input {
+      border: 1.31px solid #777980;
+      background-color: #ffffff;
+      border-radius: 5px;
+      padding: 18px 20px;
+      @include font(20px, 700);
+      color: #000000;
+      width: 100%;
+    }
 
-        p {
-            padding-top: 30px;
-            @include font(18px, 700);
-            color: #777980;
-            padding-bottom: 13px;
-        }
+    .img-upload {
+      input {
+        border: 1.31px dotted #777980;
+        height: 217px;
+      }
+    }
 
-        input {
-            border: 1.31px solid #777980;
-            background-color: #FFFFFF;
-            border-radius: 5px;
-            padding: 18px 20px;
-            @include font(20px, 700);
-            color: #000000;
-            width: 100%;
-        }
+    .btn-common {
+      padding-top: 50px;
+      display: flex;
+      justify-content: center;
 
-        .img-upload {
-            input {
-                border: 1.31px dotted #777980;
-                height: 217px;
+      button {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .rsuite-image-upload-field {
+    .rs-uploader-trigger-btn {
+      border: 1.3px solid transparent;
+      border-image: repeating-linear-gradient(
+          45deg,
+          #777980 0,
+          #777980 5px,
+          transparent 5px,
+          transparent 10px
+        )
+        1 round;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-block: 65px;
+      gap: 15px;
+
+      .add-file-btn {
+        width: 100%;
+        max-width: 138px;
+        border-color: #e31e24;
+      }
+    }
+
+    .rs-uploader-file-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .rs-uploader-file-item-preview {
+            img {
+                object-fit: contain;
             }
         }
-
-        .btn-common {
-            padding-top: 50px;
-            display: flex;
-            justify-content: center;
-
-            button {
-                margin-right: 15px
-            }
+        .rs-uploader-file-item-content {
+          .rs-uploader-file-item-title {
+            color: black;
+          }
+    
+          .rs-uploader-file-item-status {
+            display: none;
+          }
         }
     }
+  }
 }
 
 .btn-common {
-    @include font(20px, 400);
+  @include font(20px, 400);
 
-    button {
-        padding: 15px 30px;
-        border-radius: 5px;
-    }
+  button {
+    padding: 15px 30px;
+    border-radius: 5px;
+  }
 
-    .btn-cencal {
-        border: 1px solid #E31E24;
-        background-color: transparent;
-        color: #E31E24;
-    }
+  .btn-cencal {
+    border: 1px solid #e31e24;
+    background-color: transparent;
+    color: #e31e24;
+  }
 
-    .btn-add {
-        color: #FFFFFF;
-        background: #E31E24;
-    }
+  .btn-add {
+    color: #ffffff;
+    background: #e31e24;
+  }
 }
 
 .red-toggle .form-check-input:checked::before {
-    display: none;
+  display: none;
 }
 
-
 .red-toggle .form-check-input {
-    // width: 3rem;
-    height: 1.3rem;
-    background-color: #ccc;
-    border: none;
-    position: relative;
+  // width: 3rem;
+  height: 1.3rem;
+  background-color: #ccc;
+  border: none;
+  position: relative;
 
-    // .input {
-        width: 35px !important;
-    // }
+  // .input {
+  width: 35px !important;
+  // }
 
+  &:checked {
+    background-color: #e53935;
+  }
 
-    &:checked {
-        background-color: #e53935;
-    }
+  &:focus {
+    box-shadow: none;
+  }
 
-    &:focus {
-        box-shadow: none;
-    }
+  &::before {
+    position: absolute;
+    content: "";
+    top: 2px;
+    left: 2px;
+    width: 1rem;
+    height: 1rem;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out;
+  }
 
-    &::before {
-        position: absolute;
-        content: "";
-        top: 2px;
-        left: 2px;
-        width: 1rem;
-        height: 1rem;
-        background-color: white;
-        border-radius: 50%;
-        transition: transform 0.2s ease-in-out;
-    }
-
-    &:checked::before {
-        transform: translateX(1.2rem);
-    }
+  &:checked::before {
+    transform: translateX(1.2rem);
+  }
 }

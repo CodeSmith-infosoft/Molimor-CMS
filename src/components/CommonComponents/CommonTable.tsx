@@ -1,4 +1,4 @@
-import { JSX, ReactNode } from "react";
+import { Dispatch, JSX, ReactNode, SetStateAction } from "react";
 import { Table } from "react-bootstrap";
 import TablePagination from "./TablePagination";
 
@@ -18,7 +18,7 @@ type ComponentProps = {
   page?: number;
   totalPages?: number;
   totalRecords?: number;
-  onPageChange?: (page: number) => void;
+  onPageChange?: Dispatch<SetStateAction<{ page: number; limit: number; totalPages: number; totalRecords: number; }>>;
 };
 
 const CommonTable: React.FC<ComponentProps> = ({
