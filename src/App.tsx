@@ -12,6 +12,9 @@ import RejectAuth from "./routes/RejectAuth";
 import Login from "./pages/Login";
 import { MainProvider } from "./context/mainContext";
 import SubCategoriesPage from "./pages/Categories/subCategory";
+import OrderDetails from "./components/orders-components/OrderDetails";
+import User from "./pages/User";
+import UserDetails from "./pages/UserDetails";
 
 function App() {
   return (
@@ -28,8 +31,14 @@ function App() {
                 element={<SingleProductPage />}
               />
               <Route path="/categories" element={<CategoriesPage />} />
-              <Route path="/sub-categories/:id" element={<SubCategoriesPage />} />
+              <Route
+                path="/sub-categories/:id"
+                element={<SubCategoriesPage />}
+              />
               <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/order/:id" element={<OrderDetails />} />
+              <Route path="/users" element={<User />} />
+              <Route path="/user/:id" element={<UserDetails />} />
             </Route>
             <Route element={<RejectAuth />}>
               <Route path="/login" element={<Login />} />

@@ -40,12 +40,12 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
       image: "",
     },
   });
-  const { categoryChange }: any = useContext(MainContext);
+  const { categoryChange, setCategoryChange }: any = useContext(MainContext);
   const refs = useRef<any>({});
   const [show, setShow] = useState("");
   const [isEdit, setIsEdit] = useState<categoryListType | null>(null);
   const [categoryList, setCategoryList] = useState<categoryListType[]>([]);
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState("");
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
@@ -156,10 +156,11 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
         const toast2 = res.success ? toast.success : toast.error;
         toast2(res.message);
         if (res.success) {
+          setCategoryChange((prev: boolean) => !prev);
           getCategoryData();
         }
       })
-      .finally(() => setLoading(''));
+      .finally(() => setLoading(""));
   };
 
   const getCategoryData = () => {
@@ -199,6 +200,7 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
       const toast2 = res.success ? toast.success : toast.error;
       toast2(res.message);
       if (res.success) {
+        setCategoryChange((prev: boolean) => !prev);setCategoryChange((prev: boolean) => !prev);
         handleCategories();
         setFileList(null);
         reset();

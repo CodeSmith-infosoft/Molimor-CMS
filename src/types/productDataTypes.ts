@@ -1,3 +1,5 @@
+import { subCategoryDataType } from "./categoryTypes";
+
 export type ProductDataType = {
     title: string;
     description: string;
@@ -5,7 +7,9 @@ export type ProductDataType = {
     image: string;
     salesCount: number;
     subCategoryName: string;
+    subCategoryId?: subCategoryDataType;
     quantity: number;
+    sku: number;
     _id: string;
 }
 

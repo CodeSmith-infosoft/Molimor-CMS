@@ -52,7 +52,7 @@ const TablePagination: React.FC<PaginationProps> = ({
   const fromRecord = (page - 1) * limit + 1;
   const toRecord = Math.min(page * limit, totalRecords);
 
-  return (
+  return totalRecords > 0 ? (
     <div className="table-pagination">
       <p className="mb-0">
         Showing {fromRecord}-{toRecord} from {totalRecords}
@@ -117,6 +117,8 @@ const TablePagination: React.FC<PaginationProps> = ({
         <></>
       )}
     </div>
+  ) : (
+    <></>
   );
 };
 

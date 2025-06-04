@@ -77,11 +77,11 @@ const PageTitle = ({
                   <FaPlus /> Add {button}{" "}
                 </button>{" "}
               </Link>
-            ) : (
+            ) : button ? (
               <button onClick={openCategories}>
                 <FaPlus /> Add {button}{" "}
               </button>
-            )}
+            ) : <></>}
           </>
         )}
       </div>

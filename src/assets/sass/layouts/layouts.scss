@@ -32,6 +32,9 @@
       padding-top: 40px;
 
       .menu-items {
+        a {
+          min-width: 198px;
+        }
         span {
           width: 20px;
           height: 20px;
@@ -141,6 +144,7 @@
         }
 
         .category-checkbox {
+          cursor: pointer;
           .custom-checkbox-label {
             padding: 0;
             margin-right: 10px;
@@ -180,6 +184,15 @@
               border-width: 1px;
             }
           }
+        }
+      }
+
+      .active-menu {
+        a {
+          border-left: 5px solid #e31e24;
+          color: #e31e24;
+          font-weight: 700px;
+          color: #e31e24;
         }
       }
     }

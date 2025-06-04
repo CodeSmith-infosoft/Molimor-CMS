@@ -57,9 +57,7 @@ export async function getAllProductsList(payload: getProductType) {
 
 export async function getProductByID(id: string) {
   try {
-    const response = api.get(
-      `/product/getProduct?productId=${id}`
-    );
+    const response = api.get(`/product/getProduct?productId=${id}`);
 
     return (await response).data;
   } catch (error: any) {
@@ -70,10 +68,20 @@ export async function getProductByID(id: string) {
 
 export async function toggleActiveStateById(id: string, status: boolean) {
   try {
-    const response = api.put(
-      `/product/admin/toggleActiveStateById/${id}`,
-      {isActive: status}
-    );
+    const response = api.put(`/product/admin/toggleActiveStateById/${id}`, {
+      isActive: status,
+    });
+
+    return (await response).data;
+  } catch (error: any) {
+    console.log(error);
+    return error?.response?.data;
+  }
+}
+
+export async function getPopularProductList() {
+  try {
+    const response = api.get(`/product/getPopularProductList?`);
 
     return (await response).data;
   } catch (error: any) {

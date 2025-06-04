@@ -69,12 +69,12 @@ const Layouts = ({ children }: LayoutProps) => {
             </div>
             <div className="meun-items">
               <ul>
-                <li className={pathname === "/" ? "active" : ""}>
+                <li className={pathname === "/" ? "active-menu" : ""}>
                   <Link to="/">
                     <MdDashboard size={32} /> Dashboard
                   </Link>{" "}
                 </li>
-                <li className={pathname === "/product" ? "active" : ""}>
+                <li className={pathname === "/product" ? "active-menu" : ""}>
                   <div className="d-flex align-items-center menu-items">
                     <Link to="/product">
                       <BsBoxes size={32} /> Products
@@ -88,7 +88,7 @@ const Layouts = ({ children }: LayoutProps) => {
                     </span>
                   </div>
                 </li>
-                <li className={pathname === "/categories" ? "active" : ""}>
+                <li className={pathname === "/categories" ? "active-menu" : ""}>
                   <div className="d-flex align-items-center menu-items">
                     <Link to="/categories" onClick={handleCategories}>
                       <Icon icon="line-md:list-3-filled" width={32} />{" "}
@@ -104,9 +104,9 @@ const Layouts = ({ children }: LayoutProps) => {
                   </div>
                   <Collapse in={open}>
                     <div className="drop-items">
-                      <div className="add-category">
+                      {/* <div className="add-category">
                         <FaPlus /> Add Categories
-                      </div>
+                      </div> */}
                       {categoryList.length ? (
                         categoryList.map((category) => (
                           <label
@@ -135,13 +135,13 @@ const Layouts = ({ children }: LayoutProps) => {
                     </div>
                   </Collapse>
                 </li>
-                <li>
+                <li className={(pathname === "/orders" || pathname.split('/')[1] === 'order') ? "active-menu" : ""}>
                   <Link to="/orders">
                     <CgProfile size={32} /> Orders
                   </Link>{" "}
                 </li>
-                <li>
-                  <Link to="">
+                <li className={(pathname === "/users" || pathname.split('/')[1] === 'user') ? "active-menu" : ""}>
+                  <Link to="/users">
                     <CgProfile size={32} /> Customers
                   </Link>{" "}
                 </li>

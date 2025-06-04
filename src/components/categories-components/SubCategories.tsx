@@ -7,11 +7,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import { MainContext } from "@/context/mainContext";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import categoryFormSchema, {
-  categoryFormSchemaType,
-} from "@/service/form-schema/category.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getImageAsBlob } from "@/utils/helper";
 import PageTitle from "../CommonComponents/PageTitle";
 import AddSubCategoryModal from "./AddSubCategoryModal";
 import {
@@ -20,20 +16,23 @@ import {
   inActiveSubcategory,
   updateSubCategory,
 } from "@/service/asyncStore/action/subCategory";
+import subCategoryFormSchema, {
+  subCategoryFormSchemaType,
+} from "@/service/form-schema/subCategory.schema";
+import { useParams } from "react-router-dom";
 
 const SubCategories = () => {
   const {
     register,
-    control,
     handleSubmit,
     setValue,
     formState: { errors },
     reset,
-  } = useForm<categoryFormSchemaType>({
-    resolver: zodResolver(categoryFormSchema),
+  } = useForm<subCategoryFormSchemaType>({
+    resolver: zodResolver(subCategoryFormSchema),
     defaultValues: {
       name: "",
-      image: "",
+      // image: "",
     },
   });
   const { categoryChange }: any = useContext(MainContext);
@@ -49,10 +48,11 @@ const SubCategories = () => {
     totalPages: 0,
     totalRecords: 0,
   });
+  const { id } = useParams();
 
   useEffect(() => {
-    getCategoryData();
-  }, [categoryChange]);
+    getSubCategoryData();
+  }, [categoryChange, pagination.page, id]);
 
   const columns = [
     {
@@ -144,14 +144,14 @@ const SubCategories = () => {
         const toast2 = res.success ? toast.success : toast.error;
         toast2(res.message);
         if (res.success) {
-          getCategoryData();
+          getSubCategoryData();
         }
       })
       .finally(() => setLoading(false));
   };
 
-  const getCategoryData = () => {
-    getSubCategoryList({ page: pagination.page, limit: pagination.limit }).then(
+  const getSubCategoryData = () => {
+    getSubCategoryList({ page: pagination.page, limit: pagination.limit, categoryId: id }).then(
       (res) => {
         if (res.success) {
           setCategoryList(res.data.data);
@@ -166,31 +166,39 @@ const SubCategories = () => {
     );
   };
 
-  const onSubmit = async (data: categoryFormSchemaType) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    if (isEdit?._id && !(data.image instanceof File)) {
-      const blob = await getImageAsBlob(data.image);
-      formData.append(`image`, blob);
-    } else {
-      formData.append("image", data.image);
-    }
+  const onSubmit = async (data: subCategoryFormSchemaType) => {
+    // const formData = new FormData();
+    // formData.append("name", data.name);
+    // if (isEdit?._id && !(data.image instanceof File)) {
+    //   const blob = await getImageAsBlob(data.image);
+    //   formData.append(`image`, blob);
+    // } else {
+    //   formData.append("image", data.image);
+    // }
+
+    const payload = {
+      name: data.name,
+      categoryId: id,
+    };
 
     const action = () =>
       isEdit?._id
-        ? updateSubCategory(formData, isEdit._id)
-        : addSubCategory(formData);
+        ? updateSubCategory(payload, isEdit._id)
+        : addSubCategory(payload);
     action().then((res) => {
       const toast2 = res.success ? toast.success : toast.error;
       toast2(res.message);
       if (res.success) {
         reset();
-        getCategoryData();
+        getSubCategoryData();
       }
     });
   };
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    setValue("name","")
+    setIsEdit(null)
+  };
 
   return (
     <>
@@ -216,7 +224,6 @@ const SubCategories = () => {
           </Col>
           <Col md={4}>
             <AddSubCategoryModal
-              control={control}
               register={register}
               onSubmit={onSubmit}
               handleSubmit={handleSubmit}

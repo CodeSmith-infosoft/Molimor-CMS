@@ -31,6 +31,12 @@ export type categoryPayloadType = {
   limit?: number;
 };
 
+export type subCategoryPayloadType = {
+  page?: number;
+  limit?: number;
+  categoryId?: string
+};
+
 export type CategoriestModalPropsType = {
   openCategories: boolean;
   handleCategories: (setFileList: React.Dispatch<any>) => void;
@@ -75,29 +81,29 @@ export type CategoriestModalPropsType = {
 };
 
 export type SubCategoriestModalPropsType = {
-  control: Control<
+  control?: Control<
     {
       name: string;
-      image: string | File;
+      // image: string | File;
     },
     any,
     {
       name: string;
-      image: string | File;
+      // image: string | File;
     }
   >;
   register: UseFormRegister<{
-    image: string | File;
+    // image: string | File;
     name: string;
   }>;
   handleSubmit: UseFormHandleSubmit<
     {
       name: string;
-      image: string | File;
+      // image: string | File;
     },
     {
       name: string;
-      image: string | File;
+      // image: string | File;
     }
   >;
   onSubmit: (
@@ -106,11 +112,11 @@ export type SubCategoriestModalPropsType = {
   ) => void;
   errors: FieldErrors<{
     name: string;
-    image: string | File;
+    // image: string | File;
   }>;
   item?: categoryListType | null;
   setValue: UseFormSetValue<{
     name: string;
-    image: string | File;
+    // image: string | File;
   }>;
 };

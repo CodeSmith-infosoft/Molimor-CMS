@@ -196,6 +196,8 @@
 
 .common-table {
   border-radius: 10px;
+  overflow-y: hidden;
+  overflow-x: auto;
 
   .table {
     border-collapse: separate;
@@ -227,6 +229,10 @@
     thead {
       tr {
         th {
+          font-family: "Lato";
+          font-weight: 700;
+          font-size: 16px;
+
           padding: 18px 22px;
         }
       }
@@ -268,6 +274,9 @@
         td {
           padding: 18px 22px;
           vertical-align: middle;
+          font-family: "Lato";
+          font-weight: 500;
+          font-size: 16px;
 
           .pro-id {
             color: #e31e24;
@@ -308,8 +317,41 @@
           }
         }
 
+        .orderId {
+          font-family: "Lato";
+          font-weight: 500;
+          font-size: 16px;
+          color: #e31e24;
+        }
+
+        .order-status-button {
+          button {
+            padding: 4px 10px;
+            font-family: "Lato";
+            font-weight: 500;
+            font-size: 16px;
+            border-radius: 4px;
+          }
+          .paid {
+            background-color: #c4f8e2;
+            color: #06a561;
+          }
+          .Processing {
+            background-color: #fff0ea;
+            color: #f86624;
+          }
+          .Delivered {
+            background-color: #e9faf7;
+            color: #1a9882;
+          }
+          .Cancelled {
+            background-color: #feecee;
+            color: #eb3d4d;
+          }
+        }
+
         .product-list-fade-color {
-          font-family: 'Lato';
+          font-family: "Lato";
           font-weight: 500;
           font-size: 16px;
           color: #777980;

@@ -1,93 +1,70 @@
-import { Table } from 'react-bootstrap'
-import avatar from '@/assets/image/avatar-img.png'
-import { FaCaretDown } from 'react-icons/fa'
+import { Table } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { getPopularProductList } from "@/service/asyncStore/action/product";
+import { ProductDataType } from "@/types/productDataTypes";
+import { useNavigate } from "react-router-dom";
 
 const BestSellers = () => {
-    return (
-        <section className='best-sellers'>
-            <div className='title'>
-                Best Sellers
-                <button>See All</button>
-            </div>
-            <Table>
-                <thead>
-                    <tr>
-                        <th><div className='pro-menu'>Product <FaCaretDown /> </div></th>
-                        <th>Customer</th>
-                        <th><div className='pro-menu'>Total <FaCaretDown /> </div></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div className='product'>
-                                <img src={avatar} alt="avatar" />
-                                <div className='product-title'>
-                                    <h5>Handmade Pouch</h5>
-                                    <p className='mb-0'>+3 other products</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="customer">
-                                <h5>John Bushmill</h5>
-                                <p className='mb-0'>Johnb@mail.com</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="total">
-                                <span>$121.00</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div className='product'>
-                                <img src={avatar} alt="avatar" />
-                                <div className='product-title'>
-                                    <h5>Handmade Pouch</h5>
-                                    <p className='mb-0'>+3 other products</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="customer">
-                                <h5>John Bushmill</h5>
-                                <p className='mb-0'>Johnb@mail.com</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="total">
-                                <span>$121.00</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div className='product'>
-                                <img src={avatar} alt="avatar" />
-                                <div className='product-title'>
-                                    <h5>Handmade Pouch</h5>
-                                    <p className='mb-0'>+3 other products</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="customer">
-                                <h5>John Bushmill</h5>
-                                <p className='mb-0'>Johnb@mail.com</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="total">
-                                <span>$121.00</span>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </Table>
-        </section>
-    )
-}
+  const [productData, setProductData] = useState<ProductDataType[]>([]);
+  const navigate = useNavigate();
 
-export default BestSellers
+  useEffect(() => {
+    getPopularProductList().then((res) => {
+      if (res.success) {
+        const mainProducts = res.data.slice(0, 3);
+        setProductData(mainProducts);
+      }
+    });
+  }, []);
+
+  return (
+    <section className="best-sellers">
+      <div className="title">
+        Best Sellers
+        <button onClick={() => navigate("/product")}>See All</button>
+      </div>
+      <Table>
+        <thead>
+          <tr>
+            <th>
+              <div className="pro-menu">Product </div>
+            </th>
+            <th>Sales</th>
+            <th>
+              <div className="pro-menu">SKU </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {productData.length ? (
+            productData.map((data) => (
+              <tr>
+                <td>
+                  <div className="product">
+                    <img
+                      src={import.meta.env.VITE_IMAGE_DOMAIN + data.image[0]}
+                      alt="avatar"
+                    />
+                    <div className="product-title">
+                      <h5 className="two-line-clamp">{data.title}</h5>
+                    </div>
+                  </div>
+                </td>
+                <td>{data.salesCount}</td>
+                <td>
+                  <div className="total">
+                    <span>{data.sku}</span>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <></>
+          )}
+        </tbody>
+      </Table>
+    </section>
+  );
+};
+
+export default BestSellers;

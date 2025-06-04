@@ -1,8 +1,8 @@
-import { categoryPayloadType } from "@/types/categoryTypes";
+import { subCategoryPayloadType } from "@/types/categoryTypes";
 import api from "..";
 import { getParamString } from "@/utils/helper";
 
-export async function getSubCategoryList(payload: categoryPayloadType) {
+export async function getSubCategoryList(payload: subCategoryPayloadType) {
   try {
     const response = api.get(
       `/subCategory/getSubCategoryList?${getParamString(payload)}`
@@ -39,9 +39,9 @@ export async function inActiveSubcategory(id: string, isActive: boolean) {
   }
 }
 
-export async function addSubCategory(formData: FormData) {
+export async function addSubCategory(payload: {name: string, categoryId?: string}) {
   try {
-    const response = api.post(`/subCategory/admin/addSubCategory`, formData);
+    const response = api.post(`/subCategory/admin/addSubCategory`, payload);
 
     return (await response).data;
   } catch (error) {
@@ -50,9 +50,9 @@ export async function addSubCategory(formData: FormData) {
   }
 }
 
-export async function updateSubCategory(formData: FormData, id: string) {
+export async function updateSubCategory(payload: {name: string, categoryId?: string}, id: string) {
   try {
-    const response = api.put(`/subCategory/admin/updateSubCategory/${id}`, formData);
+    const response = api.put(`/subCategory/admin/updateSubCategory/${id}`, payload);
 
     return (await response).data;
   } catch (error) {

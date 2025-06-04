@@ -23,3 +23,26 @@ export const getParamString = (object: any) => {
 
   return params.toString();
 };
+
+export function debounce(func: any, delay: number) {
+  let timeout: any;
+  return function (...args: any[]) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      //@ts-ignore
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
+export function formatUserAddress(userData: {
+  address?: string;
+  state?: string;
+  country?: string;
+  pincode?: string;
+}): string {
+  if (!userData) return "";
+  return [userData.address, userData.state, userData.country, userData.pincode]
+    .filter(Boolean)
+    .join(", ");
+}
