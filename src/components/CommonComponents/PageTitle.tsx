@@ -11,6 +11,7 @@ type PageTitleType = {
   path?: string;
   onSubmit?: (data: any) => void;
   onCancel?: () => void; 
+  isExport? : boolean
 };
 
 const PageTitle = ({
@@ -21,7 +22,8 @@ const PageTitle = ({
   button,
   openCategories,
   onSubmit,
-  onCancel
+  onCancel,
+  isExport
 }: PageTitleType) => {
   return (
     <section className="page-title">
@@ -64,12 +66,12 @@ const PageTitle = ({
           </>
         ) : (
           <>
-            <Link to="">
+            {isExport !== false && <Link to="">
               {" "}
               <button className="btn-1">
                 <BsDownload /> Export{" "}
               </button>
-            </Link>
+            </Link>}
             {path ? (
               <Link rel="stylesheet" to={path}>
                 {" "}

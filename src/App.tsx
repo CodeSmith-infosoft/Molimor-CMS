@@ -15,6 +15,7 @@ import SubCategoriesPage from "./pages/Categories/subCategory";
 import OrderDetails from "./components/orders-components/OrderDetails";
 import User from "./pages/User";
 import UserDetails from "./pages/UserDetails";
+import CouponDetails from "./pages/CouponDetails";
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
               <Route path="/order/:id" element={<OrderDetails />} />
               <Route path="/users" element={<User />} />
               <Route path="/user/:id" element={<UserDetails />} />
+              <Route path="/coupons" element={<CouponDetails />} />
+              <Route path="/coupon" element={<UserDetails />} />
+              <Route path="/coupon/:id" element={<UserDetails />} />
             </Route>
             <Route element={<RejectAuth />}>
               <Route path="/login" element={<Login />} />

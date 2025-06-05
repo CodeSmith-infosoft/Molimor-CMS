@@ -301,7 +301,7 @@ const OrderDetails = () => {
                           address: orderDetails?.shippingAddress.join(" "),
                           state: orderDetails?.shippingState,
                           country: orderDetails?.shippingCountry,
-                          pincode: orderDetails?.shippingPincode.toString(),
+                          pincode: orderDetails?.shippingPincode?.toString(),
                         })}
                       </span>
                     </div>

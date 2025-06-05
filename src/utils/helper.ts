@@ -1,3 +1,15 @@
+export const formatOptions: Intl.DateTimeFormatOptions = {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+};
+
+export const formatted = (date: string) => {
+  const formateDate = new Date(date)
+
+  return formateDate.toLocaleDateString("en-US", formatOptions);
+};
+
 export const toBase64 = (file: File) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -68,5 +80,9 @@ export function calculateAgeDetails(pastDateString: string) {
     months += 12;
   }
 
-  return years ? years + ' years' : months ? months + ' months' : days + ' days';
+  return years
+    ? years + " years"
+    : months
+    ? months + " months"
+    : days + " days";
 }

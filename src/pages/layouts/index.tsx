@@ -23,7 +23,6 @@ import {
 } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoLogOutSharp } from "react-icons/io5";
-import { LuFileQuestion } from "react-icons/lu";
 import { MdAddLocationAlt, MdDashboard, MdSubscriptions } from "react-icons/md";
 import { PiCourtBasketballFill } from "react-icons/pi";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -144,13 +143,8 @@ const Layouts = ({ children }: LayoutProps) => {
                     <CgProfile size={32} /> Customers
                   </Link>{" "}
                 </li>
-                <li>
-                  <Link to="">
-                    <LuFileQuestion size={32} /> Inquiry
-                  </Link>{" "}
-                </li>
-                <li>
-                  <Link to="">
+                <li className={(pathname === "/coupons" || pathname.split('/')[1] === 'coupon') ? "active-menu" : ""}>
+                  <Link to="/coupons">
                     <PiCourtBasketballFill size={32} /> Coupons
                   </Link>{" "}
                 </li>

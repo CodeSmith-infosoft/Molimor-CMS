@@ -32,6 +32,7 @@ const Products = () => {
   useEffect(() => {
     getProductData();
   }, [pagination.page]);
+  
   const columns = [
     {
       // title: <div className='d-flex align-items-center'><input className='input-box me-2' type="checkbox" />Products</div>,
