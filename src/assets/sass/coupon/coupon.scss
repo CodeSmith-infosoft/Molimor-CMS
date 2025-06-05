@@ -102,8 +102,8 @@
         td {
           .coupon-icon {
             padding: 11px;
-            background-color: #336DFF;
-            color: #FFFFFF;
+            background-color: #336dff;
+            color: #ffffff;
             border-radius: 5px;
 
             svg {
@@ -114,5 +114,32 @@
       }
     }
   }
-  
+}
+
+.single-product {
+  .coupon-ticket-wrapper {
+    display: flex;
+    gap: 32px;
+    .coupon-type-ticket {
+      padding-block: 32px;
+      width: 340px;
+      border: 1px solid #777980;
+      border-radius: 10px;
+      color: #777980;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+
+      .label {
+        @include font(20px, 400, 100%, "Lato");
+      }
+
+      &.active {
+        border: 2.67px solid #E31E24;
+        color: #E31E24;
+      }
+    }
+  }
 }

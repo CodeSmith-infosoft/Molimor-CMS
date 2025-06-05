@@ -60,7 +60,7 @@ const PageTitle = ({
             <button className="btn-1-cancel" onClick={onCancel}>
               Cancel{" "}
             </button>
-            <button onClick={onSubmit}>
+            <button className="btn-1-save" onClick={onSubmit}>
               Save{" "}
             </button>
           </>

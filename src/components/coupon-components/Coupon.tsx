@@ -182,7 +182,7 @@ const Coupon = () => {
   };
 
   const handleEdit = (id: string) => {
-    navigate(`/update-product/${id}`);
+    navigate(`/coupon/${id}`);
   };
 
   const handleDeleteConfirm = async () => {

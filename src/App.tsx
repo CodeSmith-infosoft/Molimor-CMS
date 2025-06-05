@@ -16,6 +16,7 @@ import OrderDetails from "./components/orders-components/OrderDetails";
 import User from "./pages/User";
 import UserDetails from "./pages/UserDetails";
 import CouponDetails from "./pages/CouponDetails";
+import AddCoupon from "./pages/AddCoupon";
 
 function App() {
   return (
@@ -41,8 +42,8 @@ function App() {
               <Route path="/users" element={<User />} />
               <Route path="/user/:id" element={<UserDetails />} />
               <Route path="/coupons" element={<CouponDetails />} />
-              <Route path="/coupon" element={<UserDetails />} />
-              <Route path="/coupon/:id" element={<UserDetails />} />
+              <Route path="/coupon" element={<AddCoupon />} />
+              <Route path="/coupon/:id" element={<AddCoupon />} />
             </Route>
             <Route element={<RejectAuth />}>
               <Route path="/login" element={<Login />} />

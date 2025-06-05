@@ -33,6 +33,14 @@
       padding: 8px 12px;
       border-radius: 8px;
       width: 100%;
+
+      &:focus-within {
+        outline: none;
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
     }
 
     textarea {
@@ -106,6 +114,21 @@
       .remove {
         background-color: #ff0000;
       }
+    }
+
+    .rs-picker-toggle-wrapper {
+      width: 100%;
+
+      .rs-picker-input-group {
+        border: 1px solid #f0f1f3;
+        &:focus-within {
+          outline: none;
+        }
+      }
+    }
+
+    .rs-picker-error > .rs-picker-input-group {
+      border: 1px solid #f0f1f3;
     }
   }
 
