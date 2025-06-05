@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "flatpickr/dist/themes/material_green.css";
 import State from "@/components/dashboard-components/State";
 import SalesGraph from "@/components/dashboard-components/SalesGraph";
@@ -6,6 +6,8 @@ import { Col, Row } from "react-bootstrap";
 import BestSellers from "@/components/dashboard-components/BestSellers";
 import RecentOrders from "@/components/dashboard-components/RecentOrders";
 import { DatePicker } from "rsuite";
+import { getHomePageData } from "@/service/asyncStore/action/dashboard";
+import { dashboardStatsType } from "@/types/dashboardTypes";
 
 const Dashboard = () => {
   const [filter, setFilter] = useState<{
@@ -15,6 +17,20 @@ const Dashboard = () => {
     startDate: null,
     endDate: null,
   });
+  const [dashboardData, setDashboardData] = useState<dashboardStatsType | null>(
+    null
+  );
+
+  useEffect(() => {
+    getHomePageData({
+      startDate: filter.startDate,
+      endDate: filter.endDate,
+    }).then((res) => {
+      if (res.success) {
+        setDashboardData(res.data);
+      }
+    });
+  }, [filter]);
 
   return (
     <>
@@ -66,10 +82,10 @@ const Dashboard = () => {
           </div>
         </div>
       </section>
-      <State />
+      <State dashboardData={dashboardData} />
       <Row>
         <Col md={7}>
-          <SalesGraph />
+          <SalesGraph dashboardData={dashboardData} filter={filter} />
         </Col>
         <Col md={5}>
           <BestSellers />

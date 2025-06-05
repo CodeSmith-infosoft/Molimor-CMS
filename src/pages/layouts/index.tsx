@@ -19,7 +19,6 @@ import {
   FaAngleUp,
   FaChevronDown,
   FaMedal,
-  FaPlus,
   FaSearch,
 } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";

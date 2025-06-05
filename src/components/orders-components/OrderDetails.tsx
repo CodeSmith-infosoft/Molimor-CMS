@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { BsFillCreditCardFill, BsFillTrophyFill } from "react-icons/bs";
+import { BsFillCreditCardFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { HiTruck } from "react-icons/hi";
 import { IoCalendarClear, IoPencil } from "react-icons/io5";

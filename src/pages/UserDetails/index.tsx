@@ -1,8 +1,12 @@
+import OrderData from "@/components/user-details-components/orderData"
+import Profile from "@/components/user-details-components/Profile"
+
 const UserDetails = () => {
   return (
-    <div>
-      
-    </div>
+    <section>
+      <Profile />
+      <OrderData />
+    </section>
   )
 }
 

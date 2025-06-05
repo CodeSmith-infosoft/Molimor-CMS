@@ -6,6 +6,18 @@
   text-overflow: ellipsis;
 }
 
+.one-line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tooltip.show {
+  opacity: 1 !important;
+}
+
 .tooltip-inner {
   border: 1px solid gray;
   background-color: white !important;

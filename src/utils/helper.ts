@@ -46,3 +46,27 @@ export function formatUserAddress(userData: {
     .filter(Boolean)
     .join(", ");
 }
+
+export function calculateAgeDetails(pastDateString: string) {
+  const pastDate = new Date(pastDateString);
+  const now = new Date();
+
+  let years = now.getFullYear() - pastDate.getFullYear();
+  let months = now.getMonth() - pastDate.getMonth();
+  let days = now.getDate() - pastDate.getDate();
+
+  // Adjust if current month/day is before the past month/day
+  if (days < 0) {
+    months -= 1;
+    // Get number of days in the previous month
+    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+    days += prevMonth.getDate();
+  }
+
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+
+  return years ? years + ' years' : months ? months + ' months' : days + ' days';
+}

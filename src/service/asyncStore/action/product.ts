@@ -66,10 +66,10 @@ export async function getProductByID(id: string) {
   }
 }
 
-export async function toggleActiveStateById(id: string, status: boolean) {
+export async function toggleActiveStateById(id: string, status: boolean, name: string) {
   try {
     const response = api.put(`/product/admin/toggleActiveStateById/${id}`, {
-      isActive: status,
+      [name]: status,
     });
 
     return (await response).data;

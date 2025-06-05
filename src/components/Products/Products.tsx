@@ -27,7 +27,7 @@ const Products = () => {
   const [productToDelete, setProductToDelete] =
     useState<ProductDataType | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState("");
 
   useEffect(() => {
     getProductData();
@@ -125,7 +125,33 @@ const Products = () => {
                 <input
                   type="checkbox"
                   checked={value}
-                  onChange={() => handleActiveToggle(item._id, !value)}
+                  onChange={() => handleActiveToggle(item._id, !value, 'isActive')}
+                />
+                <div className="toggle-switch">
+                  <div className={`toggle-knob ${value ? "active" : ""}`} />
+                </div>
+              </label>
+            ) : (
+              <span className="spinner" />
+            )}
+          </>
+        );
+      },
+    },
+    {
+      title: "Popular",
+      dataIndex: "isPopular",
+      key: "isPopular",
+      cellClass: "product-list-fade-color product-status",
+      render: (value: boolean, item: ProductDataType) => {
+        return (
+          <>
+            {loading !== item._id ? (
+              <label>
+                <input
+                  type="checkbox"
+                  checked={value}
+                  onChange={() => handleActiveToggle(item._id, !value, 'isPopular')}
                 />
                 <div className="toggle-switch">
                   <div className={`toggle-knob ${value ? "active" : ""}`} />
@@ -180,9 +206,9 @@ const Products = () => {
     },
   ];
 
-  const handleActiveToggle = (id: string, status: boolean) => {
+  const handleActiveToggle = (id: string, status: boolean, name: string) => {
     setLoading(id);
-    toggleActiveStateById(id, status)
+    toggleActiveStateById(id, status, name)
       .then((res) => {
         const toast2 = res.success ? toast.success : toast.error;
         toast2(res.message);
@@ -190,7 +216,7 @@ const Products = () => {
           getProductData();
         }
       })
-      .finally(() => setLoading(''));
+      .finally(() => setLoading(""));
   };
 
   const getProductData = () => {
