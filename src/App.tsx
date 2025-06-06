@@ -17,6 +17,9 @@ import User from "./pages/User";
 import UserDetails from "./pages/UserDetails";
 import CouponDetails from "./pages/CouponDetails";
 import AddCoupon from "./pages/AddCoupon";
+import MarketplaceManager from "./pages/MarketplaceManager";
+import SocialMedia from "./pages/SocialMedia";
+import HomeBanner from "./pages/HomeBanner";
 
 function App() {
   return (
@@ -44,6 +47,9 @@ function App() {
               <Route path="/coupons" element={<CouponDetails />} />
               <Route path="/coupon" element={<AddCoupon />} />
               <Route path="/coupon/:id" element={<AddCoupon />} />
+              <Route path="/market-place" element={<MarketplaceManager />} />
+              <Route path="/social-media" element={<SocialMedia />} />
+               <Route path="/home-banner" element={<HomeBanner />} />
             </Route>
             <Route element={<RejectAuth />}>
               <Route path="/login" element={<Login />} />

@@ -142,7 +142,7 @@ const UserCard = ({ user, isSelected, onSelect }: UserCardPropType) => {
         show={showDeleteModal}
         onHide={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
-        title="Delete Product"
+        title={`${activeRef ? "Block" : "Unblock"} User`}
         message={
           <>
             Are you sure you want to {activeRef ? "Block" : "Unblock"}{" "}

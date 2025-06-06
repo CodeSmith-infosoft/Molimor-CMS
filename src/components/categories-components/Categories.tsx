@@ -22,7 +22,7 @@ import { getImageAsBlob } from "@/utils/helper";
 
 type Categoriestype = {
   openCategories: boolean;
-  handleCategories: (setFileList?: React.Dispatch<any>) => void;
+  handleCategories: (isOpen: boolean, setFileList?: React.Dispatch<any>) => void;
 };
 
 const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
@@ -143,7 +143,7 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
 
   const handleEdit = (item: categoryListType) => {
     setIsEdit(item);
-    handleCategories();
+    handleCategories(true);
     setShow("");
     // setValue("name", item.name);
     // setValue("image", item.image);
@@ -200,8 +200,8 @@ const Categories = ({ openCategories, handleCategories }: Categoriestype) => {
       const toast2 = res.success ? toast.success : toast.error;
       toast2(res.message);
       if (res.success) {
-        setCategoryChange((prev: boolean) => !prev);setCategoryChange((prev: boolean) => !prev);
-        handleCategories();
+        setCategoryChange((prev: boolean) => !prev);
+        handleCategories(false);
         setFileList(null);
         reset();
         getCategoryData();

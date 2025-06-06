@@ -10,7 +10,7 @@ export const formatted = (date: string) => {
   return formateDate.toLocaleDateString("en-US", formatOptions);
 };
 
-export const toBase64 = (file: File) =>
+export const toBase64 = (file: File | Blob) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

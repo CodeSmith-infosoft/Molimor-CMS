@@ -24,6 +24,6 @@ export type ProductVariantType = {
 }
 
 export type getProductType = {
-    page: number;
-    limit: number;
+    page?: number | boolean;
+    limit?: number;
 }

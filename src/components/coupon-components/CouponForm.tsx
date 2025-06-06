@@ -24,9 +24,7 @@ const CouponForm = () => {
     handleSubmit,
     watch,
     setValue,
-    getValues,
     formState: { errors },
-    clearErrors,
     reset,
   } = useForm<couponFormdataType>({
     resolver: zodResolver(couponSchema),

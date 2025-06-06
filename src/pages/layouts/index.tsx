@@ -12,13 +12,13 @@ import {
   DropdownMenu,
   DropdownToggle,
 } from "react-bootstrap";
-import { BsBoxes, BsFillBox2HeartFill } from "react-icons/bs";
+import { BsBoxes } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import {
   FaAngleDown,
   FaAngleUp,
   FaChevronDown,
-  FaMedal,
+  FaInstagram,
   FaSearch,
 } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -26,6 +26,7 @@ import { IoLogOutSharp } from "react-icons/io5";
 import { MdAddLocationAlt, MdDashboard, MdSubscriptions } from "react-icons/md";
 import { PiCourtBasketballFill } from "react-icons/pi";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { TfiLayoutSliderAlt } from "react-icons/tfi";
 
 type LayoutProps = {
   children: ReactNode;
@@ -148,19 +149,19 @@ const Layouts = ({ children }: LayoutProps) => {
                     <PiCourtBasketballFill size={32} /> Coupons
                   </Link>{" "}
                 </li>
-                <li>
-                  <Link to="">
+                <li className={pathname === "/market-place" ? "active-menu" : ""}>
+                  <Link to="/market-place">
                     <MdAddLocationAlt size={32} /> Market Place
                   </Link>{" "}
                 </li>
-                <li>
-                  <Link to="">
-                    <FaMedal size={32} /> Certification
+                <li className={pathname === "/social-media" ? "active-menu" : ""}>
+                  <Link to="/social-media">
+                    <FaInstagram size={32} /> Social Media
                   </Link>{" "}
                 </li>
-                <li>
-                  <Link to="">
-                    <BsFillBox2HeartFill size={32} /> Media
+                <li className={pathname === "/home-banner" ? "active-menu" : ""}>
+                  <Link to="home-banner">
+                    <TfiLayoutSliderAlt size={32} /> Home Banner
                   </Link>{" "}
                 </li>
                 <li>

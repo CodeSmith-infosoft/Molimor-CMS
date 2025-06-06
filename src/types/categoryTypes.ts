@@ -39,7 +39,7 @@ export type subCategoryPayloadType = {
 
 export type CategoriestModalPropsType = {
   openCategories: boolean;
-  handleCategories: (setFileList: React.Dispatch<any>) => void;
+  handleCategories: (isOpen: boolean, setFileList: React.Dispatch<any>) => void;
   control: Control<
     {
       name: string;

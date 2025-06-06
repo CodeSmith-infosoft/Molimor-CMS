@@ -6,7 +6,7 @@ type PageTitleType = {
   title: string;
   subTitle?: string;
   cancelBtn?: boolean;
-  openCategories?: () => void;
+  openCategories?: (isOpen: boolean) => void;
   button?: string;
   path?: string;
   onSubmit?: (data: any) => void;
@@ -80,7 +80,7 @@ const PageTitle = ({
                 </button>{" "}
               </Link>
             ) : button ? (
-              <button onClick={openCategories}>
+              <button onClick={()=> openCategories && openCategories(true)}>
                 <FaPlus /> Add {button}{" "}
               </button>
             ) : <></>}

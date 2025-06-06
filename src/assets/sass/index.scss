@@ -15,7 +15,7 @@ a {
 }
 
 .container {
-  max-width: 1504px !important;
+  max-width: none !important;
   padding-left: 0;
   padding-right: 0;
 }
@@ -82,4 +82,7 @@ p {
 @import url(./user/user.scss);
 @import url(./user/userDetails.scss);
 @import url(./coupon/coupon.scss);
+@import url(./market-place/MarketplaceManager.scss);
+@import url(./social-media/socialMedia.scss);
+@import url(./home-banner/homeBanner.scss);
 @import 'react-toastify/dist/ReactToastify.css';

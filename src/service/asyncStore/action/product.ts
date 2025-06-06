@@ -1,5 +1,6 @@
 import { getProductType } from "@/types/productDataTypes";
 import api from "..";
+import { getParamString } from "@/utils/helper";
 
 export async function addSingleProduct(formData: FormData) {
   try {
@@ -45,7 +46,7 @@ export async function deleteProduct(id: string) {
 export async function getAllProductsList(payload: getProductType) {
   try {
     const response = api.get(
-      `/product/admin/getAllProductsList?page=${payload.page}&limit=${payload.limit}`
+      `/product/admin/getAllProductsList?${getParamString(payload)}`
     );
 
     return (await response).data;
